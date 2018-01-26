@@ -20,7 +20,7 @@ To categorize these nodes into broader categories, they need to be merged in wit
 
 # Ontology sources
 | node type | ontology source | download file | permalink downloaded file | description | download date | common id |
-| --------- | --------- | --------- |
+| --------- | --------- | --------- | --------- | --------- | --------- | --------- |
 | disorder | [upheno](https://github.com/obophenotype/upheno) | see "Cross-walk"; from [upheno mammal](https://github.com/obophenotype/upheno/blob/master/mammal.owl), [upheno vertebrate](https://github.com/obophenotype/upheno/blob/master/vertebrate.owl), [upheno metozoa](https://github.com/obophenotype/upheno/blob/master/metazoa.owl) | NA | Combined cross-species phenotype ontologies; incomplete | 2018-01-26 | `UniProtKB` (human), `RGD` (rat), `MGI:` (mouse), `FBgn` (fly), `ZDB-GENE-` (zebrafish), `NCBI_GP:` or `PAMGO_VMD:` (oocytes), `WBGene` (worm)|
 | gene | [Gene Ontology Consortium]() | [ontology structure](http://purl.obolibrary.org/obo/go/go-basic.obo),  see "Cross-walk" for annotations | updated daily| using basic version of the GO; filtered such that the graph is guaranteed to be acyclic, and annotations can be propagated up the graph. The relations included are is_a, part_of, regulates, negatively_regulates and positively_regulates | 2018-01-26 | `GO:` gene ontology id |
 | pathways | [Reactome](https://reactome.org/download-data) | reactome.graphdb.tgz | NA | Reactome graph database (neo4j format) | 2018-01-25 | Reactome `R-` id |
@@ -33,7 +33,7 @@ To categorize these nodes into broader categories, they need to be merged in wit
 # Cross-walk to unique IDs
 ## Disorder
 | unique ID | description | mapping source | individual phenotype ontology file(s) |
-| --------- | --------- | --------- |
+| --------- | --------- | --------- | --------- |
 | MP | mammalian phenotype | [upheno](https://github.com/obophenotype/upheno/blob/master/mappings/hp-to-mp-bestmatches.tsv) | [mp](http://purl.obolibrary.org/obo/mp.owl), [mp-hp alignment](http://purl.obolibrary.org/obo/upheno/hp-mp/mp_hp-align-equiv.owl, [mpath: mouse pathology](http://purl.obolibrary.org/obo/upheno/imports/mpath_phenotype.owl) |
 | FBbt | fly anatomy | NA |
 | FBcv | fly controlled vocabulary | NA |
@@ -47,7 +47,7 @@ To categorize these nodes into broader categories, they need to be merged in wit
 
 ## Gene
 | unique ID | description | mapping source | individual phenotype ontology file(s) |
-| --------- | --------- | --------- |
+| --------- | --------- | --------- | --------- |
 | NCBIGene | human | |
 | ZFIN | zebrafish ||
 | Wormbase | *C. elegans* ||
