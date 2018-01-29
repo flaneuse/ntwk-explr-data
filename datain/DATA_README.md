@@ -31,10 +31,14 @@ To categorize these nodes into broader categories, they need to be merged in wit
 * Upheno -- while used apparently by the Monarch Initiative -- seems to be just pulling imports of each of the phenotype ontologies together; not sure if it's adding anything, aside from the cross-walk files and the mp-hp alignment equivalents. Better to just get the real deal from the updated sources?
 
 # Cross-walk to unique IDs
+
+http://www.uniprot.org/uploadlists/
+
 ## Disorder
 | unique ID | description | mapping source | individual phenotype ontology file(s) |
 | --------- | --------- | --------- | --------- |
 | MP | mammalian phenotype | [upheno](https://github.com/obophenotype/upheno/blob/master/mappings/hp-to-mp-bestmatches.tsv) | [mp](http://purl.obolibrary.org/obo/mp.owl), [mp-hp alignment](http://purl.obolibrary.org/obo/upheno/hp-mp/mp_hp-align-equiv.owl, [mpath: mouse pathology](http://purl.obolibrary.org/obo/upheno/imports/mpath_phenotype.owl) |
+| MP | http://purl.obolibrary.org/obo/mp/releases/2018-01-24/mp.owl | http://purl.obolibrary.org/obo/mp.owl |
 | FBbt | fly anatomy | NA |
 | FBcv | fly controlled vocabulary | NA |
 | HP | human phenotype | < base >| [hp](http://purl.obolibrary.org/obo/hp.owl) |
