@@ -42,15 +42,15 @@ genes.head()
 
 # -- Clean up ontology files --
 # disorders
-import src.data_prep.ont_DISO as diso
+import src.data_prep.annont_DISO as diso
 # genes
-import src.data_prep.ont_GENE as gene
+import src.data_prep.annont_GENE as gene
 # anatomy
-import src.data_prep.ont_ANAT as anat
+import src.data_prep.annont_ANAT as anat
 # physiological pathways
-import src.data_prep.ont_PHYS as phys
+import src.data_prep.annont_PHYS as phys
 # chemicals
-import src.data_prep.ont_CHEM as chem
+import src.data_prep.annont_CHEM as chem
 
 # Create a master template for all the different ontology types
 onts = []
@@ -62,6 +62,12 @@ onts = pd.merge(genes, gene.gene_ont, on="id", how="left", indicator=True)
 # check if any vars are unmerged.
 onts._merge.value_counts()
 
+# find missing terms; spot-check if there's any patterns.
 missing = onts[onts._merge == 'left_only'][['id', 'node_name']].sort_values(['id'])
+print(missing)
 
-missing
+# Count frequency of GO terms
+onts.go_id.value_counts()
+
+# Count number of GO terms per ID.
+onts.groupby('id')['go_id'].count().describe()

@@ -1,10 +1,9 @@
-# ont_GENE.py
-# Cleans up all gene ontology sources, based on the Gene Ontology Consortium's classification
+# annont_GENE.py
+# Cleans up all gene ontology annotations based on the Gene Ontology Consortium's classification
 # Laura Hughes, lhughes@scripps.edu, 29 January 2018
 #
 # Data sources: https://github.com/flaneuse/ntwk-explr/blob/master/datain/DATA_README.md
 
-# Gene ontology sources are broken down by
 
 # Setup
 import pandas as pd
