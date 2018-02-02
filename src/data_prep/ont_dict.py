@@ -44,7 +44,7 @@ genes.head()
 # disorders
 import src.data_prep.annont_DISO as diso
 # genes
-import src.data_prep.annont_GENE as gene
+import src.data_prep.annot_GENE as gene
 # anatomy
 import src.data_prep.annont_ANAT as anat
 # physiological pathways
@@ -57,8 +57,8 @@ onts = []
 
 # -- Merge --
 # left join to nodes
-onts = pd.merge(genes, gene.gene_ont, on="id", how="left", indicator=True)
-
+onts = pd.merge(genes, gene.gene_annot, on="id", how="left", indicator=True)
+onts.head()
 # check if any vars are unmerged.
 onts._merge.value_counts()
 
