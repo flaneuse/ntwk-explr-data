@@ -1,4 +1,4 @@
-# annont_GENE.py
+# annot_GENE.py
 # Cleans up all gene ontology annotations based on the Gene Ontology Consortium's classification
 # Laura Hughes, lhughes@scripps.edu, 29 January 2018
 #
@@ -8,7 +8,7 @@
 # Setup
 import pandas as pd
 import warnings
-base_dir = "datain/ontology/"
+base_dir = "datain/annotations/"
 
 # -- import function --
 # [1] import files & [2] add in source info ------------------------------------------------
@@ -98,6 +98,6 @@ worm['id'] = worm.db.astype(str) + ':' + worm.db_id.astype(str)
 
 
 # [5] append all organisms together ------------------------------------------------
-gene_ont = human.append(rat, ignore_index = True).append(mouse, ignore_index = True).append(fly, ignore_index = True).append(zfish, ignore_index = True).append(worm, ignore_index = True)
+gene_annot = human.append(rat, ignore_index = True).append(mouse, ignore_index = True).append(fly, ignore_index = True).append(zfish, ignore_index = True).append(worm, ignore_index = True)
 
-gene_ont.head
+gene_annot.keys()
