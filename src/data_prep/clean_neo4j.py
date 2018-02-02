@@ -6,12 +6,11 @@
 # @date: 2 February 2018
 
 # What this function does:
-# 1. imports all .json files within `datain/neo4j`
+# 1. queries neo4j graph dataset to find connections for a paritcular query
 # 2. pulls out the pertinent info for the nodes
 # 3. merges annotation ontology terms with the nodes
 # 4. pulls out the edge connections for each specific path number
 # 5. combines nodes and edges into a json file and exports.
-#
 
 
 # setup
