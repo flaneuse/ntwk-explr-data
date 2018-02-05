@@ -8,10 +8,12 @@
 # What this function does:
 # 1. queries neo4j graph dataset to find connections for a paritcular query
 # 2. pulls out the pertinent info for the nodes
-# 3. merges annotation ontology terms with the nodes
+# 3. merges annotation ontology terms with the nodes (not yet implemented)
 # 4. pulls out the edge connections for each specific path number
 # 5. combines nodes and edges into a json file and exports.
+# 6. builds helper function to count number of metapaths
 
+# neo4j query interface modified from https://github.com/NuriaQueralt/hypothesis-generation/blob/master/neo4j-hypotheses/q1_1_cypher_to_hypotheses.py
 
 # setup
 import pandas as pd
@@ -54,8 +56,6 @@ dataout_dir = 'dataout'
 #   ... each with various params/structures, which are all nested objects.
 
 
-# neo4j query interface modified from https://github.com/NuriaQueralt/hypothesis-generation/blob/master/neo4j-hypotheses/q1_1_cypher_to_hypotheses.py
-
 # neo4j query
 queries = {
 "NGLY1-ENGASE":
@@ -68,6 +68,13 @@ queries = {
 "MATCH path=(source:GENE)-[:`RO:HOM0000020`]-(:GENE)--(ds:DISO)--(:GENE)-[:`RO:HOM0000020`]-(g1:GENE)--(pw:PHYS)--(target:GENE) WHERE source.id = 'NCBIGene:55768' AND target.id = 'NCBIGene:358' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x)) WITH g1, ds, pw, path, size( (source)-[:`RO:HOM0000020`]-() ) AS source_ortho, size( (g1)-[:`RO:HOM0000020`]-() ) AS other_ortho, max(size( (pw)-[]-() )) AS pwDegree, max(size( (ds)-[]-() )) AS dsDegree, [n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked, [r IN relationships(path) WHERE r.property_label IN ['interacts with','in paralogy relationship with','in orthology relationship with','colocalizes with']] AS edges_marked WHERE size(nodes_marked) = 0 AND size(edges_marked) = 0 AND pwDegree < 51 AND dsDegree < 21 RETURN path"
 }
 
+# <<< query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing") >>>
+# main function to access the neo4j api to query network and return results
+# inputs:   query string (Cypher query arguments)
+#           url to local or AWS instance of network
+#           port: location of port to access data; must also be opened on AWS
+#           username/pw: access rights to the network
+# output:   list containing flat dataframe of nodes and edges
 def query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing"):
     # initialize neo4j
     # requires bolt connection to the URI
@@ -86,12 +93,6 @@ def query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j",
     edges = []
     path_num = 0
 
-# isinstance(, pd.DataFrame)
-# x = path_dct['edges']
-#
-# y = pd.concat([x,x], ignore_index=True)
-# nodes
-# len(y)
     for record in result:
         path_dct = parsePath(record, path_num)
         if (len(nodes) == 0): # first iteration of loop
@@ -106,8 +107,10 @@ def query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j",
         # if (path_num % 10 == 0):
             # print("Processed " + str(path_num) + "\n")
 
-# Core function to parse neo4j results
-# Pulling out the terms needed to interface with
+# <<< parsePath(path, path_num) >>>
+# Core function to parse neo4j results for an individual path
+# Pulling out the terms needed to interface with d3-based visualizations
+# returns an object containing a dataframe of nodes and a dataframe of edges
 def parsePath(path, path_num):
     # initialize vars
     # out = {}
