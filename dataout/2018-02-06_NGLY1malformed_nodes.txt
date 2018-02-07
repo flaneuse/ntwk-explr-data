@@ -1,0 +1,72 @@
+<Node id=399 labels=set() properties={'id': 'GO:0045893,PHYS,"positive regulation of transcription, DNA-templated",NA,None'}>
+<Node id=421 labels=set() properties={'id': 'MP:0011087,DISO,"neonatal lethality, complete penetrance",NA,None'}>
+<Node id=682 labels=set() properties={'id': 'OMIM:610661.0001,DISO,"NGLY1, 1-BP DEL, 1891C",NA,None'}>
+<Node id=715 labels=set() properties={'id': 'MP:0011090,DISO,"perinatal lethality, incomplete penetrance",NA,None'}>
+<Node id=828 labels=set() properties={'id': 'MESH:D015674,DISO,"Mammary Neoplasms, Animal",NA,None'}>
+<Node id=1670 labels=set() properties={'id': 'GO:0003700,PHYS,"transcription factor activity, sequence-specific DNA binding",NA,None'}>
+<Node id=1750 labels=set() properties={'id': 'OMIM:615510,DISO,"Alacrima, achalasia, and mental retardation syndrome",NA,None'}>
+<Node id=1764 labels=set() properties={'id': 'OMIM:610661.0003,DISO,"NGLY1, 1-BP DUP, 1370G",NA,None'}>
+<Node id=1914 labels=set() properties={'id': 'GO:0006355PHENOTYPE,PHYS,"regulation of transcription, DNA-templated phenotype",NA,None'}>
+<Node id=1971 labels=set() properties={'id': 'MP:0011085,DISO,"postnatal lethality, complete penetrance",NA,None'}>
+<Node id=2034 labels=set() properties={'id': 'MP:0011091,DISO,"prenatal lethality, complete penetrance",NA,None'}>
+<Node id=2048 labels=set() properties={'id': 'MP:0010844,DISO,"increased effector memory CD4-positive, alpha-beta T cell number",NA,None'}>
+<Node id=2114 labels=set() properties={'id': 'MESH:D003528,DISO,"Carcinoma, Adenoid Cystic",NA,None'}>
+<Node id=2307 labels=set() properties={'id': 'OMIM:610661.0002,DISO,"NGLY1, ARG401TER",NA,None'}>
+<Node id=2311 labels=set() properties={'id': 'MP:0011100,DISO,"preweaning lethality, complete penetrance",NA,None'}>
+<Node id=2361 labels=set() properties={'id': 'OMIM:610661.0004,DISO,"NGLY1, 3-BP DEL, 1205TTC",NA,None'}>
+<Node id=2381 labels=set() properties={'id': 'GO:0001190,PHYS,"transcriptional activator activity, RNA polymerase II transcription factor binding",NA,None'}>
+<Node id=2475 labels=set() properties={'id': 'MP:0011088,DISO,"neonatal lethality, incomplete penetrance",NA,None'}>
+<Node id=2480 labels=set() properties={'id': 'MP:0011092,DISO,"embryonic lethality, complete penetrance",NA,None'}>
+<Node id=2528 labels=set() properties={'id': 'MP:0011098,DISO,"embryonic lethality during organogenesis, complete penetrance",NA,None'}>
+<Node id=2539 labels=set() properties={'id': 'MESH:D004489,DISO,"Edema, Cardiac",NA,None'}>
+<Node id=2709 labels=set() properties={'id': 'MP:0011101,DISO,"prenatal lethality, incomplete penetrance",NA,None'}>
+<Node id=2734 labels=set() properties={'id': 'MP:0011110,DISO,"preweaning lethality, incomplete penetrance",NA,None'}>
+<Node id=2821 labels=set() properties={'id': 'MP:0013430,DISO,"increased memory CD4-positive, CD25-positive, alpha-beta regulatory T cell number",NA,None'}>
+<Node id=2948 labels=set() properties={'id': 'MP:0011086,DISO,"postnatal lethality, incomplete penetrance",NA,None'}>
+<Node id=2981 labels=set() properties={'id': 'MP:0011106,DISO,"embryonic lethality between implantation and somite formation, incomplete penetrance",NA,None'}>
+<Node id=3013 labels=set() properties={'id': 'GO:0001205,PHYS,"transcriptional activator activity, RNA polymerase II distal enhancer sequence-specific binding",NA,None'}>
+<Node id=3049 labels=set() properties={'id': 'MP:0011400,DISO,"lethality, complete penetrance",NA,None'}>
+<Node id=3089 labels=set() properties={'id': 'OMIM:107776.0001,DISO,"AQP1, ALA45VAL",NA,None'}>
+<Node id=3146 labels=set() properties={'id': 'MESH:D008325,DISO,"Mammary Neoplasms, Experimental",NA,None'}>
+<Node id=3230 labels=set() properties={'id': 'MP:0013435,DISO,"decreased CD8-positive, naive alpha-beta T cell number",NA,None'}>
+<Node id=3288 labels=set() properties={'id': 'MP:0011108,DISO,"embryonic lethality during organogenesis, incomplete penetrance",NA,None'}>
+<Node id=3294 labels=set() properties={'id': 'MP:0008074,DISO,"increased CD4-positive, alpha beta T cell number",NA,None'}>
+<Node id=3296 labels=set() properties={'id': 'MP:0010851,DISO,"decreased effector memory CD8-positive, alpha-beta T cell number",NA,None'}>
+<Node id=3418 labels=set() properties={'id': 'OMIM:610661.0005,DISO,"NGLY1, ARG542TER",NA,None'}>
+<Node id=3447 labels=set() properties={'id': 'MP:0011089,DISO,"perinatal lethality, complete penetrance",NA,None'}>
+<Node id=3465 labels=set() properties={'id': 'HP:0002187,DISO,"Intellectual disability, profound",NA,None'}>
+<Node id=3604 labels=set() properties={'id': 'MP:0008075,DISO,"decreased CD4-positive, alpha beta T cell number",NA,None'}>
+<Node id=3633 labels=set() properties={'id': 'MP:0011096,DISO,"embryonic lethality between implantation and somite formation, complete penetrance",NA,None'}>
+<Node id=3663 labels=set() properties={'id': 'MP:0011099,DISO,"lethality throughout fetal growth and development, complete penetrance",NA,None'}>
+<Node id=3666 labels=set() properties={'id': 'MP:0011093,DISO,"embryonic lethality at implantation, complete penetrance",NA,None'}>
+<Node id=3691 labels=set() properties={'id': 'OMIM:608984,DISO,"Ataxia, sensory, autosomal dominant",NA,None'}>
+<Node id=3765 labels=set() properties={'id': 'MP:0010169,DISO,"decreased CD4-positive, CD25-positive, alpha-beta regulatory T cell number",NA,None'}>
+<Node id=4058 labels=set() properties={'id': 'MP:0011109,DISO,"lethality throughout fetal growth and development, incomplete penetrance",NA,None'}>
+<Node id=4155 labels=set() properties={'id': 'OMIM:600170.0001,DISO,"AQP3, IVS5, G-A, +1",NA,None'}>
+<Node id=4157 labels=set() properties={'id': 'MP:0010850,DISO,"increased effector memory CD8-positive, alpha-beta T cell number",NA,None'}>
+<Node id=4187 labels=set() properties={'id': 'MP:0011094,DISO,"embryonic lethality before implantation, complete penetrance",NA,None'}>
+<Node id=4483 labels=set() properties={'id': 'OMIM:107776.0002,DISO,"AQP1, PRO38LEU",NA,None'}>
+<Node id=4537 labels=set() properties={'id': 'GO:0000781PHENOTYPE,PHYS,"chromosome, telomeric region phenotype",NA,None'}>
+<Node id=4920 labels=set() properties={'id': 'MP:0013433,DISO,"increased KLRG1-positive CD4-positive, CD25-positive, alpha-beta regulatory T cell number",NA,None'}>
+<Node id=4946 labels=set() properties={'id': 'UniProt:P29972,GENE,Aquaporin 1 (Colton blood group),"AQP1|Aquaporin-CHIP|Water channel protein for red blood cells and kidney proximal tubule|aquaporin 1 (channel-forming integral protein, 28kDa, CO blood group)|aquaporin 1, Colton blood group antigen|aquaporin-1|channel-like integral membrane protein, 28-kDa|urine water channel",mammalian protein found in Homo sapiens'}>
+<Node id=4951 labels=set() properties={'id': 'UniProt:Q13520,GENE,Aquaporin 6,"AQP6|Aquaporin-2-like|hKID|AQP-6|aquaporin-6|aquaporin 2-like, kidney specific|aquaporin-6, kidney specific|kidney-specific aquaporin",mammalian protein found in Homo sapiens'}>
+<Node id=4960 labels=set() properties={'id': 'CHEBI:506227,CHEM,N-acetyl-D-glucosamine,"N-Acetyl-D-glucosamine|GlcNAc|N-Acetylchitosamine|2-Acetamido-2-deoxy-D-glucose|2-Acetamido-2-deoxy-D-glucopyranose|N-Acetylglucosamine|N-[(3R,4R,5S,6R)-2,4,5-trihydroxy-6-(hydroxymethyl)oxan-3-yl]acetamide|Acetylglucosamine|2-Acetamido-2-deoxyglucose|2-Acetamido-D-glucose|2-(Acetylamino)-2-deoxyhexose|2-Acetylamino-2-deoxy-D-glucose",chemical compound'}>
+<Node id=4962 labels=set() properties={'id': 'GO:0006040,PHYS,amino sugar metabolic process,amino sugar metabolism|aminosaccharide metabolic process|aminosaccharide metabolism,"The chemical reactions and pathways involving any amino sugar, sugars containing an amino group in place of a hydroxyl group."'}>
+<Node id=4963 labels=set() properties={'id': 'GO:0006536,PHYS,glutamate metabolic process,GO:0006536|glutamic acid metabolic process|glutamic acid metabolism|glutamate metabolism,"The chemical reactions and pathways involving glutamate, the anion of 2-aminopentanedioic acid."'}>
+<Node id=4964 labels=set() properties={'id': 'GO:0018146,PHYS,keratan sulfate biosynthetic process,keratan sulfate biosynthesis|keratan sulphate biosynthesis|keratan sulfate anabolism|keratan sulfate formation|keratan sulphate biosynthetic process|keratan sulfate synthesis,"The chemical reactions and pathways resulting in the formation of keratan sulfate, a glycosaminoglycan with repeat units consisting of beta-1,4-linked D-galactopyranosyl-beta-(1,4)-N-acetyl-D-glucosamine 6-sulfate and with variable amounts of fucose."'}>
+<Node id=4965 labels=set() properties={'id': 'GO:0035528,PHYS,UDP-N-acetylglucosamine biosynthesis involved in chitin biosynthesis,UDP-N-acetylglucosamine anabolism involved in chitin biosynthesis|UDP-N-acetylglucosamine formation involved in chitin biosynthesis|UDP-GlcNAc biosynthetic process involved in chitin biosynthesis|UDP-N-acetylglucosamine biosynthetic process involved in chitin biosynthetic process|UDP-N-acetylglucosamine synthesis involved in chitin biosynthesis|UDP-GlcNAc biosynthesis involved in chitin biosynthesis|UDP-GlcNAc biosynthetic process involved in chitin biosynthetic process,"The chemical reactions and pathways resulting in the formation of UDP-N-acetylglucosamine, a substance composed of N-acetylglucosamine in glycosidic linkage with uridine diphosphate, that contribute to the biosynthesis of chitin."'}>
+<Node id=4968 labels=set() properties={'id': 'GO:0005737,ANAT,cytoplasm,GO:0005737,"All of the contents of a cell excluding the plasma membrane and nucleus, but including other subcellular structures."'}>
+<Node id=4970 labels=set() properties={'id': 'GO:0005764,ANAT,lysosome,GO:0005764,"A small lytic vacuole that has cell cycle-independent morphology and is found in most animal cells and that contains a variety of hydrolases, most of which have their maximal activities in the pH range 5-6. The contained enzymes display latency if pr"'}>
+<Node id=4978 labels=set() properties={'id': 'CL:0000233,ANAT,platelet,"thrombocyte|trombocit|Platelet, or Thrombocyte",NA'}>
+<Node id=4982 labels=set() properties={'id': 'UniProt:O60909,GENE,"Beta-1,4-galactosyltransferase 2","B4GALT2|UDP-Gal:beta-GlcNAc beta-1,4-galactosyltransferase 2|UDP-galactose:beta-N-acetylglucosamine beta-1,4-galactosyltransferase 2",mammalian protein found in Homo sapiens'}>
+<Node id=4983 labels=set() properties={'id': 'UniProt:P15291,GENE,"Beta-1,4-galactosyltransferase 1","B4GALT1|UDP-Gal:beta-GlcNAc beta-1,4-galactosyltransferase 1|UDP-galactose:beta-N-acetylglucosamine beta-1,4-galactosyltransferase 1",mammalian protein found in Homo sapiens'}>
+<Node id=4987 labels=set() properties={'id': 'UniProt:Q9BZP6,GENE,"Chitinase, acidic",CHIA|Lung-specific protein TSA1902,mammalian protein found in Homo sapiens'}>
+<Node id=4990 labels=set() properties={'id': 'UniProt:O60512,GENE,"Beta-1,4-galactosyltransferase 3","B4GALT3|UDP-Gal:beta-GlcNAc beta-1,4-galactosyltransferase 3|UDP-galactose:beta-N-acetylglucosamine beta-1,4-galactosyltransferase 3",mammalian protein found in Homo sapiens'}>
+<Node id=4991 labels=set() properties={'id': 'UniProt:O60513,GENE,"Beta-1,4-galactosyltransferase 4","UDP-Gal:beta-GlcNAc beta-1,4-galactosyltransferase 4|UDP-galactose:beta-N-acetylglucosamine beta-1,4-galactosyltransferase 4|B4GALT4",mammalian protein found in Homo sapiens'}>
+<Node id=4993 labels=set() properties={'id': 'UniProt:P61626,GENE,Lysozyme,"1,4-beta-N-acetylmuramidase C|LYZ",mammalian protein found in Homo sapiens'}>
+<Node id=4994 labels=set() properties={'id': 'UniProt:Q8WZA1,GENE,"Protein O-linked mannose N-acetylglucosaminyltransferase 1 (beta 1,2-)","GnT I.2|POMGNT1|UDP-GlcNAc:alpha-D-mannoside beta-1,2-N-acetylglucosaminyltransferase I.2",mammalian protein found in Homo sapiens'}>
+<Node id=5003 labels=set() properties={'id': 'GO:0097316,PHYS,cellular response to N-acetyl-D-glucosamine,NA,"Any process that results in a change in state or activity of a cell (in terms of movement, secretion, enzyme production, gene expression, etc.) as a result of an N-acetyl-D-glucosamine stimulus."'}>
+<Node id=5004 labels=set() properties={'id': 'GO:0097315,PHYS,response to N-acetyl-D-glucosamine,NA,"Any process that results in a change in state or activity of a cell or an organism (in terms of movement, secretion, enzyme production, gene expression, etc.) as a result of an N-acetyl-D-glucosamine stimulus."'}>
+<Node id=5005 labels=set() properties={'id': 'CHEBI:78366,CHEM,EC 2.7.1.1 (hexokinase) inhibitor,CHEBI:78366,"An EC 2.7.1.* (phosphotransferases with an alcohol group as acceptor) inhibitor that interferes with the action of hexokinase, EC 2.7.1.1, an enzyme that phosphorylates hexoses forming hexose phosphate."'}>
+<Node id=5007 labels=set() properties={'id': 'UniProt:P00811,GENE,"Penicillin-binding protein; beta-lactamase, intrinsically weak b4150",protein|ampC|b4150,microbial protein found in Escherichia coli str. K-12 substr. MG1655'}>
+<Node id=5009 labels=set() properties={'id': 'UniProt:O75874,GENE,"Isocitrate dehydrogenase (NADP(+)) 1, cytosolic",IDH1|IDP|Cytosolic NADP-isocitrate dehydrogenase|NADP(+)-specific ICDH|Oxalosuccinate decarboxylase,mammalian protein found in Homo sapiens'}>

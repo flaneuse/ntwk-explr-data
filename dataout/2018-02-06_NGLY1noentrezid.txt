@@ -1,0 +1,20 @@
+5                  MGI:1857807
+9                  MGI:2174931
+6                  MGI:3033387
+10                 MGI:3609478
+13                 MGI:3613472
+14                 MGI:3655809
+8                  MGI:3783406
+4                  MGI:3783422
+12                 MGI:4441703
+17                 MGI:4441853
+2                  MGI:5692545
+11                 MGI:5797368
+1     ZFIN:ZDB-GENE-081104-441 ** in_uniprot
+0     ZFIN:ZDB-GENE-090313-171
+3     ZFIN:ZDB-GENE-091204-183 ** in_uniprot
+7       ZFIN:ZDB-GENE-100408-2
+16      ZFIN:ZDB-GENE-100624-2
+15    ZFIN:ZDB-GENE-131121-199 ** in_uniprot
+18          InterPro:IPR000425
+19              UniProt:Q96QH8 ** in_entrez;gene_id_not_unique
