@@ -1,0 +1,698 @@
+{
+  "nodes": [{
+    "name": "NFE2L1",
+    "n": 1464
+  }, {
+    "name": "Nfe2l1",
+    "n": 1464
+  }, {
+    "name": "homeostasis/metabolism phenotype",
+    "n": 276
+  }, {
+    "name": "Hyperinsulinemia",
+    "n": 164
+  }, {
+    "name": "Insulin resistance",
+    "n": 128
+  }, {
+    "name": "Hepatic steatosis",
+    "n": 120
+  }, {
+    "name": "Hepatic fibrosis",
+    "n": 100
+  }, {
+    "name": "Hyperglycemia",
+    "n": 88
+  }, {
+    "name": "decreased embryo size",
+    "n": 56
+  }, {
+    "name": "Hepatic necrosis",
+    "n": 56
+  }, {
+    "name": "embryonic growth retardation",
+    "n": 52
+  }, {
+    "name": "oxidative stress",
+    "n": 52
+  }, {
+    "name": "Abnormal glucose homeostasis",
+    "n": 36
+  }, {
+    "name": "decreased circulating glucose level",
+    "n": 36
+  }, {
+    "name": "growth/size/body region phenotype",
+    "n": 36
+  }, {
+    "name": "abnormal pancreatic beta cell morphology",
+    "n": 32
+  }, {
+    "name": "Hepatitis",
+    "n": 32
+  }, {
+    "name": "Hepatocellular carcinoma",
+    "n": 32
+  }, {
+    "name": "increased nucleated erythrocyte cell number",
+    "n": 28
+  }, {
+    "name": "abnormal blood homeostasis",
+    "n": 24
+  }, {
+    "name": "decreased hematocrit",
+    "n": 24
+  }, {
+    "name": "increased circulating alanine transaminase level",
+    "n": 24
+  }, {
+    "name": "increased liver weight",
+    "n": 24
+  }, {
+    "name": "increased circulating aspartate transaminase level",
+    "n": 20
+  }, {
+    "name": "Hypoinsulinemia",
+    "n": 12
+  }, {
+    "name": "Pallor",
+    "n": 8
+  }, {
+    "name": "small liver",
+    "n": 4
+    }, {
+      "node_num": 4,
+      "name": "CAV1",
+      "n": 300
+    }, {
+      "node_num": 4,
+      "name": "Cav1",
+      "n": 192
+    }, {
+      "node_num": 4,
+      "name": "Nfe2l2",
+      "n": 144
+    }, {
+      "node_num": 4,
+      "name": "NFE2L2",
+      "n": 140
+    }, {
+      "node_num": 4,
+      "name": "Egfr",
+      "n": 128
+    }, {
+      "node_num": 4,
+      "name": "Jun",
+      "n": 112
+    }, {
+      "node_num": 4,
+      "name": "Aqp4",
+      "n": 104
+    }, {
+      "node_num": 4,
+      "name": "Aqp7",
+      "n": 64
+    }, {
+      "node_num": 4,
+      "name": "Aqp8",
+      "n": 56
+    }, {
+      "node_num": 4,
+      "name": "Gsk3b",
+      "n": 48
+    }, {
+      "node_num": 4,
+      "name": "Aqp11",
+      "n": 40
+    }, {
+      "node_num": 4,
+      "name": "Fbxw7",
+      "n": 24
+    }, {
+      "node_num": 4,
+      "name": "Stx4a",
+      "n": 24
+    }, {
+      "node_num": 4,
+      "name": "FOS",
+      "n": 20
+    }, {
+      "node_num": 4,
+      "name": "Amfr",
+      "n": 12
+    }, {
+      "node_num": 4,
+      "name": "TCF4",
+      "n": 12
+    }, {
+      "node_num": 4,
+      "name": "App",
+      "n": 8
+    }, {
+      "node_num": 4,
+      "name": "Elavl1",
+      "n": 8
+    }, {
+      "node_num": 4,
+      "name": "Exoc4",
+      "n": 8
+    }, {
+      "node_num": 4,
+      "name": "Hcfc1",
+      "n": 8
+    }, {
+      "node_num": 4,
+      "name": "Derl1",
+      "n": 4
+    }, {
+      "node_num": 4,
+      "name": "Mdfi",
+      "n": 4
+    }, {
+      "node_num": 4,
+      "name": "Siah1a",
+      "n": 4
+  }],
+  "links": [{
+    "source": "NFE2L1",
+    "target": "Nfe2l1",
+    "n": 1464,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "homeostasis/metabolism phenotype",
+    "n": 276,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hyperinsulinemia",
+    "n": 164,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Insulin resistance",
+    "n": 128,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hepatic steatosis",
+    "n": 120,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hepatic fibrosis",
+    "n": 100,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hyperglycemia",
+    "n": 88,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "decreased embryo size",
+    "n": 56,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hepatic necrosis",
+    "n": 56,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "embryonic growth retardation",
+    "n": 52,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "oxidative stress",
+    "n": 52,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Abnormal glucose homeostasis",
+    "n": 36,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "decreased circulating glucose level",
+    "n": 36,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "growth/size/body region phenotype",
+    "n": 36,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "abnormal pancreatic beta cell morphology",
+    "n": 32,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hepatitis",
+    "n": 32,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hepatocellular carcinoma",
+    "n": 32,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "increased nucleated erythrocyte cell number",
+    "n": 28,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "abnormal blood homeostasis",
+    "n": 24,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "decreased hematocrit",
+    "n": 24,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "increased circulating alanine transaminase level",
+    "n": 24,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "increased liver weight",
+    "n": 24,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "increased circulating aspartate transaminase level",
+    "n": 20,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Hypoinsulinemia",
+    "n": 12,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "Pallor",
+    "n": 8,
+    "value": 1
+  }, {
+    "source": "Nfe2l1",
+    "target": "small liver",
+    "n": 4,
+    "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "Aqp4",
+  "n": 104,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperinsulinemia",
+  "target": "Aqp7",
+  "n": 64,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic fibrosis",
+  "target": "CAV1",
+  "n": 60,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic steatosis",
+  "target": "CAV1",
+  "n": 60,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperglycemia",
+  "target": "CAV1",
+  "n": 60,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperinsulinemia",
+  "target": "CAV1",
+  "n": 60,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Insulin resistance",
+  "target": "CAV1",
+  "n": 60,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "Aqp8",
+  "n": 56,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "abnormal pancreatic beta cell morphology",
+  "target": "Egfr",
+  "n": 32,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "decreased embryo size",
+  "target": "Egfr",
+  "n": 32,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "growth/size/body region phenotype",
+  "target": "Egfr",
+  "n": 32,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "Egfr",
+  "n": 32,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "embryonic growth retardation",
+  "target": "Jun",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic fibrosis",
+  "target": "NFE2L2",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic necrosis",
+  "target": "Jun",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic necrosis",
+  "target": "NFE2L2",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic steatosis",
+  "target": "NFE2L2",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatocellular carcinoma",
+  "target": "NFE2L2",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "increased nucleated erythrocyte cell number",
+  "target": "Jun",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Insulin resistance",
+  "target": "NFE2L2",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "oxidative stress",
+  "target": "Jun",
+  "n": 28,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "abnormal blood homeostasis",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Abnormal glucose homeostasis",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "decreased circulating glucose level",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "decreased hematocrit",
+  "target": "Nfe2l2",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic steatosis",
+  "target": "Nfe2l2",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatitis",
+  "target": "Nfe2l2",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "Nfe2l2",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperglycemia",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperinsulinemia",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "increased circulating alanine transaminase level",
+  "target": "Nfe2l2",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "increased liver weight",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Insulin resistance",
+  "target": "Cav1",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "oxidative stress",
+  "target": "Nfe2l2",
+  "n": 24,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "Aqp11",
+  "n": 20,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "increased circulating aspartate transaminase level",
+  "target": "Aqp11",
+  "n": 20,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Abnormal glucose homeostasis",
+  "target": "Gsk3b",
+  "n": 12,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "decreased circulating glucose level",
+  "target": "Gsk3b",
+  "n": 12,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "Gsk3b",
+  "n": 12,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperinsulinemia",
+  "target": "Stx4a",
+  "n": 12,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hypoinsulinemia",
+  "target": "Gsk3b",
+  "n": 12,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Insulin resistance",
+  "target": "Stx4a",
+  "n": 12,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "decreased embryo size",
+  "target": "Exoc4",
+  "n": 8,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "decreased embryo size",
+  "target": "Fbxw7",
+  "n": 8,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "decreased embryo size",
+  "target": "Hcfc1",
+  "n": 8,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "embryonic growth retardation",
+  "target": "Elavl1",
+  "n": 8,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "embryonic growth retardation",
+  "target": "Fbxw7",
+  "n": 8,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Pallor",
+  "target": "Fbxw7",
+  "n": 8,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "embryonic growth retardation",
+  "target": "Derl1",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "embryonic growth retardation",
+  "target": "Mdfi",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "growth/size/body region phenotype",
+  "target": "App",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic fibrosis",
+  "target": "Amfr",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic fibrosis",
+  "target": "FOS",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic fibrosis",
+  "target": "TCF4",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic steatosis",
+  "target": "Amfr",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatic steatosis",
+  "target": "FOS",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatitis",
+  "target": "Amfr",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatitis",
+  "target": "TCF4",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hepatocellular carcinoma",
+  "target": "TCF4",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "homeostasis/metabolism phenotype",
+  "target": "App",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperglycemia",
+  "target": "FOS",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Hyperinsulinemia",
+  "target": "FOS",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "Insulin resistance",
+  "target": "FOS",
+  "n": 4,
+  "value": 1
+}, {
+  "node_num": 3,
+  "source": "small liver",
+  "target": "Siah1a",
+  "n": 4,
+  "value": 1
+
+  }]
+}
