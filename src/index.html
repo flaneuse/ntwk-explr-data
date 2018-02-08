@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <title>NGLY1 Sankey plot</title>
+
+  <style>
+  .off {
+    fill: #CCC;
+  }
+
+  .highlight {
+    stroke: #ff6574;
+    opacity: 1;
+  }
+  </style>
+
+  <!-- Bootstrap -->
+  <!-- <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+  <!-- <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet"> -->
+  <!-- <script src="/static/lib/jquery.min.js"></script> -->
+  <!-- <script src="/static/lib/popper.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+
+  <!-- <script src="/static/lib/bootstrap.min.js"></script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+</head>
+
+<body>
+<svg width="960" height="700"></svg>
+  <!-- <script src="/lib/d3v4+jetpack.js"></script> -->
+  <script src="/lib/lodash.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="/lib/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="lib/d3-sankey.min.js"></script>
+
+  <script type="text/javascript" src="js/ngly-sankey.js"></script>
+</body>
+</html>
