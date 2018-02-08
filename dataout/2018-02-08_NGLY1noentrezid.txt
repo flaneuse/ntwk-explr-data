@@ -1,0 +1,21 @@
+,gene_id,reason,id_type
+5,MGI:1857807,not found,MGI
+9,MGI:2174931,not found,MGI
+6,MGI:3033387,not found,MGI
+10,MGI:3609478,not found,MGI
+13,MGI:3613472,not found,MGI
+14,MGI:3655809,not found,MGI
+8,MGI:3783406,not found,MGI
+4,MGI:3783422,not found,MGI
+12,MGI:4441703,not found,MGI
+17,MGI:4441853,not found,MGI
+2,MGI:5692545,not found,MGI
+11,MGI:5797368,not found,MGI
+1,ZFIN:ZDB-GENE-081104-441,not found,ZFI
+0,ZFIN:ZDB-GENE-090313-171,not found,ZFI
+3,ZFIN:ZDB-GENE-091204-183,not found,ZFI
+7,ZFIN:ZDB-GENE-100408-2,not found,ZFI
+16,ZFIN:ZDB-GENE-100624-2,not found,ZFI
+15,ZFIN:ZDB-GENE-131121-199,not found,ZFI
+18,InterPro:IPR000425,not unique,Int
+19,UniProt:Q96QH8,not unique,Uni
