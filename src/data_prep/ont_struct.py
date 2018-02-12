@@ -7,13 +7,6 @@
 # @email: lhughes@scripps.edu
 # @date: 31 January 2018
 
-# Setup
-import numpy as np
-import pandas as pd
-import requests
-import progressbar
-import time
-
 # After looking through the documentation and all the associated fields that come out from the API call, it looks like there's no way to avoid
 # doing a loop through the entire tree, starting from end node and iterating till you hit the root (s).
 # Perhaps not the fastest way, but the most direct way will start from the end node rather than going from the roots down.
@@ -22,9 +15,17 @@ import time
 # However, that introduces more dependencies, and OLS has already gone through the bother of standardizing the output files.
 # So, the slow but steady way...
 
+# [0] Setup ---------------------------------------------------------------------------------
+import numpy as np
+import pandas as pd
+import requests
+import progressbar
+import time
+
 # <<< get_data(url) >>>
-# Access data from EBI API
-# returns json object with unfiltered layers of gooiness.
+# @name: get_data(url)
+# @title: Access data from EBI API
+# @description: returns json object with unfiltered layers of gooiness.
 # General structure:
 #   data['page'] --> list of number of pages in the full query
 #   data['_links'] --> https request strings for first, next, last, self pages
@@ -38,7 +39,9 @@ import time
 #     ...['obo_id']: unique id
 #     ...['synonyms']: synonyms for term
 #     ...[<other stuff>]: things that didn't seem as relevant.
-#     @example: get_data('http://www.ebi.ac.uk/ols/api/ontologies/go/terms?size=500')
+# @input: url from any API
+# @output: False if query failed; json-ized data if successful
+# @example: get_data('http://www.ebi.ac.uk/ols/api/ontologies/go/terms?size=500')
 def get_data(url):
     resp = requests.get(url)
 
@@ -187,31 +190,6 @@ def find_parents(terms, ont_id, save_terms = True, output_dir = ''):
 
     return parents
 
-def find_nextgen(parent_df, original_id, child_id,  level = -1, ancestors = [], levels = []):
-# def find_nextgen(parent_df, original_id, child_id, level = -1, ancestors = pd.DataFrame()):
-    # find the id(s) of the parent of child_id
-    # need to create a copy so it's not assigning a value to a view on the data.
-    next_gen = parent_df.copy()[parent_df.id == child_id]
-
-    # decrease the ancestor level
-    next_gen.ancestor_level = level
-    # counter on recursion level
-    level -= 1
-
-    # change the node id to be the original baby id
-    next_gen.loc[:,"id"] = original_id
-
-    for idx, row in next_gen.iterrows():
-        to_add = pd.DataFrame(row).T
-        ancestors
-        # ancestors = pd.concat([ancestors, to_add], ignore_index=True)
-        if (not row.is_root):
-            find_nextgen(parent_df, original_id, row.ancestor_id, level, ancestors)
-        else:
-            print(ancestors)
-            return ancestors
-    return None
-
 original_id = 'CHEBI:64709'
 child_id = 'CHEBI:23367'
 child_id = ['CHEBI:24431', 'FBcv:00000525']
@@ -325,75 +303,116 @@ def find_parent(parent_df, original_id, child_id, level = -1, ancestors = pd.Dat
         #    drop down a level
         return find_parent(parent_df, original_id, parent_row.ancestor_id, level - 1, ancestors)
 
+# <<< find_nextgen() >>>
+# @name:
+# @title:
+# @description:
+# @NOTE: lots of permutations of this funciton were written. One of the main sticking points was
+# whether to concat a DataFrame in each iteration of the loop, or whether to save each variable in
+# a separate list. While both work (or should, in principle), using a DataFrame means that the output
+# variable needs to be declared as a global, or else during the recursion results will be saved over/lost.
+# For simplicity, then, passing everything as lists and converting later.
+# @input:
+# @output:
+# @example:
+pathnum = 0
+def find_nextgen(parent_df, original_id, child_id,  level = -1, path_num = [], ancestors = [], levels = [], roots = [], path = [], paths = []):
+    global pathnum
+    print('level: ' + str(level))
+    print('path_num: ' + str(path_num))
 
-def find_nextgen(parent_df, original_id, child_id,  level = -1, ancestors = [], levels = []):
+    if (level == -1):
+        # initialize ancestors with the starting node (original_id)
+        levels.append(0)
+        # paths.append(-1)
+        ancestors.append(original_id)
+        roots.append(False) # NOTE: this may be wrong if the original_id is a root.
+
+    # << reset_level(output) >> : helper function to standardize indices
+    # resets level indices so 0 is the root nodes
+    def reset_level(output):
+        root_level = min(output.level)
+        output['new_level'] = output.level - root_level
+        return output
+
     # find the id(s) of the parent of child_id
-    # need to create a copy so it's not assigning a value to a view on the data.
-    next_gen = parent_df.copy()[parent_df.id == child_id]
-    parent_id = list(next_gen.ancestor_id)
+    parent_row = parent_df[parent_df.id == child_id]
+    # print(parent_row)
+    #
+    path = path + [child_id]
 
-    # decrease the ancestor level
-    next_gen.ancestor_level = level
-    # counter on recursion level
-    level -= 1
-
-    # change the node id to be the original baby id
-    next_gen.loc[:,"id"] = original_id
-
-
-    for idx, row in next_gen.iterrows():
-        print('--> starting loop')
-        print(idx)
-        # to_add = pd.DataFrame(row).T
-        # print('parent: ' + row.ancestor_id)
+    # -- recurse --
+    for idx, row in parent_row.iterrows():
+        print('parent: ' + row.ancestor_id)
+        # add in the new nodes
         ancestors.append(row.ancestor_id)
         levels.append(level)
-        # to_add = pd.DataFrame({'parent': [row.ancestor_id], 'root': [row.is_root], 'id': [row.id]})
-        # check if row already exists (and ancestors is initialized)
-        # if ((len(ancestors) == 0) | (not (ancestors == to_add).all(1).any())):
-        # ancestors = pd.concat([ancestors, to_add], ignore_index=True)
+        roots.append(row.is_root)
+        # paths.append(path_num)
+        path_num.append(row.ancestor_id)
         # print(ancestors)
-        if (not row.is_root):
-            find_nextgen(parent_df, original_id, row.ancestor_id, level, ancestors)
-            # return ancestors
+
+        # check if it's time to stop
+        if(row.is_root):
+            # have hit the root node
+            path = path + [row.ancestor_id]
+            pathnum += 1
+            print('path changed to: ' + str(pathnum))
+            print('path: ' + '-'.join(path))
+            path_num.clear()
+            paths.append(path)
+            print('STOP \n')
+
+            # convert to dataframe
+            # result = pd.DataFrame(data = {'ancestor_id': ancestors, 'level': levels, 'is_root': roots})
+            # # reset the level of the
+            # result = reset_level(result)
+            # print('ancestors (root)')
+            # print(result)
+            # output = pd.concat([output, result], ignore_index=True)
+
+            # return output.sort_values('new_level')
+            # return None
         else:
-        # #     print('found root')
-        # #     # print(ancestors)
-            return ancestors
-    return {'ancestors': ancestors, 'levels': levels}
+            find_nextgen(parent_df, original_id, row.ancestor_id, level - 1, path_num, ancestors, levels, roots, path, paths)
+        # return output
+    return {'ancestor_id': ancestors, 'level': levels, 'is_root': roots, 'paths': paths}
 
 # QA-QC: spot check a few paths within fbcv ontology
-# fbcv = get_terms('fbcv')
-# fbcv = pd.read_csv('dataout/2018-02-09FBcv_terms.tsv', sep = '\t')
-# # parent_df = find_parents(fbcv, 'fbcv', save_terms = False)
-# parent_df = pd.read_csv('dataout/2018-02-09_FBcv_parents.tsv', sep = '\t')
-# ids = parent_df.id.sample(5)
-# for term in ids:
-#     print(term)
-#     find_parent(parent_df, term, term)
-# weirdos = x.parent_id[x.new_level == 1]
-#
-#
-# parent_df[parent_df.id.isin(weirdos)].sort_values(['is_root', 'ancestor_id'])
-# id(ids)
-# id(parent_df)
-# y = parent_df.copy()
-# id(y)
-# ids.index[-1]
-#
-# # symmetric; works fine
-# find_nextgen(parent_df, parent_df.id[424], parent_df.id[424])
-# # symmetric but nested; fine.
-# find_parent(parent_df, 'CHEBI:64709', 'CHEBI:64709')
-#
-# # asymmetric; problematic
-# # ISSUE: output not global; points to different things within loop and therefore doesn't save stuff.
-# x = find_parent(parent_df, parent_df.id[817],parent_df.id[817])
-# x = find_nextgen(parent_df, parent_df.id[817],parent_df.id[817])
-# pd.DataFrame(x)
-# x.sort_index()
-# x.drop(['level'], axis = 1).drop_duplicates().sort_values('new_level')
-# x.drop(['level'], axis = 1).drop_duplicates().new_level.value_counts().sort_index()
-#
-# x.drop(['level'], axis = 1).shape
-# x.sort_values(['parent_id', 'new_level', 'level'])
+# fbcv = get_terms('fbcv') # call to API; requires ~ 7-10 min.
+fbcv = pd.read_csv('dataout/2018-02-09_FBcv_terms.tsv', sep = '\t')
+# parent_df = find_parents(fbcv, 'fbcv', save_terms = False) # call to API; requires 20-30 min.
+parent_df = pd.read_csv('dataout/2018-02-09_FBcv_parents.tsv', sep = '\t')
+
+ids = parent_df.id.sample(5)
+for term in ids:
+    print(term)
+    find_parent(parent_df, term, term)
+weirdos = x.parent_id[x.new_level == 1]
+
+
+parent_df[parent_df.id.isin(weirdos)].sort_values(['is_root', 'ancestor_id'])
+id(ids)
+id(parent_df)
+y = parent_df.copy()
+id(y)
+ids.index[-1]
+
+# symmetric; works fine
+find_nextgen(parent_df, parent_df.id[424], parent_df.id[424])
+# symmetric but nested; fine.
+find_parent(parent_df, 'CHEBI:64709', 'CHEBI:64709')
+
+
+
+# asymmetric; problematic
+# ISSUE: output not global; points to different things within loop and therefore doesn't save stuff.
+x = find_nextgen(parent_df, parent_df.id[817],parent_df.id[817])
+x
+pd.DataFrame(x)
+x.sort_index()
+x.drop(['level'], axis = 1).drop_duplicates().sort_values('new_level')
+x.drop(['level'], axis = 1).drop_duplicates().new_level.value_counts().sort_index()
+
+x.drop(['level'], axis = 1).shape
+x.sort_values(['parent_id', 'new_level', 'level'])
