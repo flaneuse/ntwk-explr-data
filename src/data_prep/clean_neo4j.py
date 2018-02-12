@@ -1,19 +1,20 @@
 # @name: clean_neo4j.py
+# @title: Get data from neo4j network
 # @description:  Pythonization of R code to prep neo4j outputs for input into a D3 bar graph/Sankey diagram
 #                R code: https://github.com/flaneuse/ngly1-exploration/blob/master/R/exploration2.Rmd
+#            What this function does:
+#                1. queries neo4j graph dataset to find connections for a paritcular query
+#                2. pulls out the pertinent info for the nodes
+#                3. merges annotation ontology terms with the nodes (not yet implemented)
+#                4. pulls out the edge connections for each specific path number
+#                5. combines nodes and edges into a json file and exports.
+#                6. builds helper function to count number of metapaths
+#           neo4j query interface modified from https://github.com/NuriaQueralt/hypothesis-generation/blob/master/neo4j-hypotheses/q1_1_cypher_to_hypotheses.py
 # @author: Laura Hughes
 # @email: lhughes@scripps.edu
 # @date: 2 February 2018
 
-# What this function does:
-# 1. queries neo4j graph dataset to find connections for a paritcular query
-# 2. pulls out the pertinent info for the nodes
-# 3. merges annotation ontology terms with the nodes (not yet implemented)
-# 4. pulls out the edge connections for each specific path number
-# 5. combines nodes and edges into a json file and exports.
-# 6. builds helper function to count number of metapaths
 
-# neo4j query interface modified from https://github.com/NuriaQueralt/hypothesis-generation/blob/master/neo4j-hypotheses/q1_1_cypher_to_hypotheses.py
 
 # setup
 import pandas as pd
