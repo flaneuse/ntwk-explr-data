@@ -256,7 +256,7 @@ def find_ancestors_1node(parent_df, id, reverse = True, return_paths = False):
 # @NOTE:    certain high level nodes have an NA id. These were filtered out upstream.
 #           As a result, any descendants of this node will have NA ancestors; assuming these ont terms aren't particularly impt.
 #           Return value for ancestors will be NA
-def find_ancestors(parent_df, ids = [], ont_id = '', output_dir = '', reverse = True, return_paths = False, save_terms = True):
+def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', ids = [], reverse = True, return_paths = False):
     # container
     output = pd.DataFrame()
 
@@ -291,26 +291,26 @@ def find_ancestors(parent_df, ids = [], ont_id = '', output_dir = '', reverse = 
 
 # QA-QC: spot check a few paths within fbcv ontology
 # fbcv = get_terms('fbcv') # call to API; requires ~ 7-10 min.
-fbcv = pd.read_csv('dataout/2018-02-09_FBcv_terms.tsv', sep = '\t')
-# parent_df = find_parents(fbcv, 'fbcv', save_terms = False) # call to API; requires 20-30 min.
-parent_df = pd.read_csv('dataout/2018-02-12_FBcv_parents.tsv', sep = '\t')
-
-
-# Initial tests; used in the development of the scripts
-# symmetric; works fine ['FBcv:0003163']
-find_ancestors_1node(parent_df, parent_df.id[424])
-
-# symmetric but nested; fine.
-find_ancestors_1node(parent_df, 'CHEBI:64709')
-
-# asymmetric; problematic ['GO:0009953']
-# initial issues: output not global; points to different things within loop and therefore doesn't save stuff.
-find_ancestors_1node(parent_df, parent_df.id[817])
-
-# Random sampling testing; checked by eye to make sure okay.
-ids = parent_df.id.sample(5)
-ids = ids.sort_index()
-find_ancestors(parent_df, ids, return_paths = True, save_terms = False)
+# fbcv = pd.read_csv('dataout/2018-02-09_FBcv_terms.tsv', sep = '\t')
+# # parent_df = find_parents(fbcv, 'fbcv', save_terms = False) # call to API; requires 20-30 min.
+# parent_df = pd.read_csv('dataout/2018-02-12_FBcv_parents.tsv', sep = '\t')
+#
+#
+# # Initial tests; used in the development of the scripts
+# # symmetric; works fine ['FBcv:0003163']
+# find_ancestors_1node(parent_df, parent_df.id[424])
+#
+# # symmetric but nested; fine.
+# find_ancestors_1node(parent_df, 'CHEBI:64709')
+#
+# # asymmetric; problematic ['GO:0009953']
+# # initial issues: output not global; points to different things within loop and therefore doesn't save stuff.
+# find_ancestors_1node(parent_df, parent_df.id[817])
+#
+# # Random sampling testing; checked by eye to make sure okay.
+# ids = parent_df.id.sample(5)
+# ids = ids.sort_index()
+# find_ancestors(parent_df, ids = ids, return_paths = True, save_terms = False)
 
 
 

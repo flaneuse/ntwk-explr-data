@@ -11,7 +11,7 @@
 
 # [0] Setup ----------------------------------------------------------------------
 output_dir = 'dataout/' # path within Atom notebook
-output_dir = '../../dataout/' # path from command line prompt
+# output_dir = '../../dataout/' # path from command line prompt
 
 import pandas as pd
 import requests
@@ -21,12 +21,12 @@ import os
 
 
 # interface to query network
-# from src.data_prep.clean_neo4j import get_nodes # path within Atom notebook
-from clean_neo4j import get_nodes # path from command line prompt
+from src.data_prep.clean_neo4j import get_nodes # path within Atom notebook
+# from clean_neo4j import get_nodes # path from command line prompt
 
 # functions to pull ontology data
-# import src.data_prep.ont_GENE as ont # path within Atom notebook
-import ont_GENE as ont # path from command line prompt
+import src.data_prep.ont_struct as ont # path within Atom notebook
+# import ont_struct as ont # path from command line prompt
 
 
 # Pull unique nodes from Nuria's graph
@@ -62,8 +62,13 @@ def create_ont_dict(ont_ids, output_dir):
     # create placeholder for term parents
     parents = {}
 
+    # create placeholder for term ancestors
+    ancestors = {}
+
     for ont_id in ont_ids:
         print(ont_id)
+
+        # -- terms --
         term_file = check_exists(files, ont_id, 'terms')
         if(term_file):
             # file already exists; read it in
@@ -74,6 +79,7 @@ def create_ont_dict(ont_ids, output_dir):
             print('creating term file')
             ont_dicts[ont_id] = ont.get_terms(ont_id, save_terms = True, output_dir = output_dir)
 
+        # -- parents --
         parent_file = check_exists(files, ont_id, 'parents')
         if(parent_file):
             # file already exists; read it in
@@ -84,7 +90,18 @@ def create_ont_dict(ont_ids, output_dir):
             print('creating parents file')
             parents[ont_id] = ont.find_parents(ont_dicts[ont_id], ont_id, save_terms= True, output_dir = output_dir)
 
-    return {'parents': parents, 'ont_terms': ont_dicts}
+        # -- ancestors --
+        hierarchy_file = check_exists(files, ont_id, 'ancestors')
+        if(hierarchy_file):
+            # file already exists; read it in
+            print('reading in ancestor hierarchical structure file')
+            ancestors[ont_id] = pd.read_csv(output_dir + hierarchy_file, sep = '\t')
+        else:
+            # create file
+            print('creating hierarchical structure file')
+            ancestors[ont_id] = ont.find_ancestors(parents[ont_id], ont_id = ont_id, save_terms = True, output_dir = output_dir)
+
+    return {'parents': parents, 'ont_terms': ont_dicts, 'ont_hierarcy': ancestors}
 
 create_ont_dict(ont_ids, output_dir)
 
