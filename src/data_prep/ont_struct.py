@@ -166,7 +166,7 @@ def find_parents(terms, ont_id, save_terms = True, output_dir = ''):
                 try:
                     response = get_data(row.parent_url)
                 except:
-                    print('index: ' + str(idx) + ' (counter: ' + str(counter) + ')')
+                    print('\n index: ' + str(idx) + ' (counter: ' + str(counter) + ')')
                     print('server overloaded; waiting 2 min. and caching results')
                     temp = pd.DataFrame([nodes, anc, roots], index = ['id', 'ancestor_id', 'is_root']).T
                     temp.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_parents_TEMPidx' + str(counter) + '.tsv', sep='\t')
@@ -257,31 +257,36 @@ def find_ancestors_1node(parent_df, id, reverse = True, return_paths = False):
 #           As a result, any descendants of this node will have NA ancestors; assuming these ont terms aren't particularly impt.
 #           Return value for ancestors will be NA
 def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', ids = [], reverse = True, return_paths = False):
-    # container
+    # container for output
     output = pd.DataFrame()
 
     # ids is an optional testing parameter; if not declared, will look for all the ids.
+    # Remove duplicate ids; some ids have multiple parents, therefore need to keep in parent_df.
+    # However, including them the entire time will add unnecessary calculations of the same paths.
     if(len(ids) == 0):
-        ids = parent_df.id
+        ids = pd.unique(parent_df.id)
+    elif(isinstance(ids, pd.Series)):
+        # convert series to Numpy ndarray
+        ids = ids.as_matrix()
 
-    with progressbar.ProgressBar(max_value = max(ids.index)) as bar:
-        for idx, node_id in ids.items():
+    with progressbar.ProgressBar(max_value = len(ids)) as bar:
+        for idx, node_id in np.ndenumerate(ids):
             ancestors = find_ancestors_1node(parent_df, id = node_id, reverse = reverse, return_paths = return_paths)
 
             # make sure ancestors returned something. If an ancestor has no unique ID, it was filtered out; return NA
             if(return_paths):
                 if(len(ancestors['ont_idx']) > 0):
-                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [ancestors['ont_idx']], 'paths': [ancestors['paths']], 'node_level': max(ancestors['ont_idx'].keys())})])
+                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [ancestors['ont_idx']], 'paths': [ancestors['paths']], 'node_level': max(ancestors['ont_idx'].keys())})], ignore_index=True)
                 else:
-                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [np.NaN], 'paths': [np.NaN], 'node_level': [np.NaN]})])
+                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [np.NaN], 'paths': [np.NaN], 'node_level': [np.NaN]})], ignore_index=True)
             else:
                 if(len(ancestors) > 0):
-                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [ancestors], 'node_level': max(ancestors.keys())})])
+                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [ancestors], 'node_level': max(ancestors.keys())})], ignore_index=True)
                 else:
-                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [np.NaN], 'node_level': [np.NaN]})])
+                    output = pd.concat([output, pd.DataFrame({'id': node_id, 'ancestors': [np.NaN], 'node_level': [np.NaN]})], ignore_index=True)
 
-            if (idx % 10 == 0):
-                bar.update(idx)
+            if (idx[0] % 10 == 0):
+                bar.update(idx[0])
 
     if (save_terms):
         output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors.tsv', sep='\t')
@@ -309,7 +314,6 @@ def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', i
 #
 # # Random sampling testing; checked by eye to make sure okay.
 # ids = parent_df.id.sample(5)
-# ids = ids.sort_index()
 # find_ancestors(parent_df, ids = ids, return_paths = True, save_terms = False)
 
 
