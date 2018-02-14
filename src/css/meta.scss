@@ -1,0 +1,34 @@
+rect.node-type {
+  stroke: $accent-color;
+  stroke-width: 1px;
+  fill: transparent;
+  rx: $rounded-corner;
+  ry: $rounded-corner;
+
+}
+
+rect.node-type:first-of-type, rect.node-type:last-of-type {
+  fill: #CCC;
+}
+
+text.node-type {
+  font-weight: $bold-weight;
+  font-size: $normal-fsize * 1.25;
+  fill: $grey75;
+  alignment-baseline: middle;
+  text-anchor: middle;
+}
+
+line.node-type, line.example, #triangle {
+  stroke: $grey70;
+  fill: $grey70;
+}
+
+line.node-type:last-of-type {
+  display: none;
+}
+
+.example {
+  font-size: $normal-fsize * 0.75;
+  fill: $grey60;
+}

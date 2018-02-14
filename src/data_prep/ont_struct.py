@@ -91,6 +91,7 @@ def pull_terms(json_data, filter_obs = True):
     syn = []
     iri = []
     root = []
+    selfs = []
     parents = []
 
 
@@ -105,6 +106,7 @@ def pull_terms(json_data, filter_obs = True):
             labels.append(term['label'])
             iri.append(term['iri'])
             root.append(term['is_root'])
+            selfs.append(term['_links']['self']['href'])
             try:
                 descrips.append(term['description'][0])
             except:
@@ -119,7 +121,7 @@ def pull_terms(json_data, filter_obs = True):
                 parents.append('')
                 continue
     # convert to a dataframe
-    terms = pd.DataFrame([ids, labels, descrips, syn, iri, root, parents], index = ['id', 'label', 'description', 'synonyms', 'node_url', 'is_root', 'parent_url']).T.set_index('id')
+    terms = pd.DataFrame([ids, labels, descrips, syn, iri, root, selfs, parents], index = ['id', 'label', 'description', 'synonyms', 'node_url', 'is_root', 'self_url', 'parent_url']).T.set_index('id')
 
     return terms
 

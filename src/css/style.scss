@@ -10,10 +10,31 @@ $normal-fsize: 1em;
 $primary-color: #333;
 $accent-color: #ff6574;
 
+$grey10: lighten($primary-color, 90);
+$grey20: lighten($primary-color, 80);
+$grey25: lighten($primary-color, 75);
+$grey30: lighten($primary-color, 70);
+$grey40: lighten($primary-color, 60);
+$grey50: lighten($primary-color, 50);
+$grey60: lighten($primary-color, 40);
+$grey70: lighten($primary-color, 30);
+$grey75: lighten($primary-color, 25);
+$grey80: lighten($primary-color, 20);
+$grey90: lighten($primary-color, 10);
+
+// Rects
+$rounded-corner: 5px;
+
+
+// basics
+
 body {
   color: $primary-color;
   font-family: $font-stack;
   font-weight: $normal-weight;
   font-size: $normal-fsize;
 }
+
+// Import files
+@import 'meta';
 @import 'sankey';
