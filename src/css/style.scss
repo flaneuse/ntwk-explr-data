@@ -1,15 +1,19 @@
 // Main SCSS file to store variables, reference dependent scss files
 
-$font-stack:    "Lato", Helvetica, sans-serif;
+// Font styling
+$font-stack: "Lato", Helvetica, sans-serif;
 $normal-weight: 300;
 $bold-weight: 400;
+$normal-fsize: 1em;
 
+// Colors
 $primary-color: #333;
 $accent-color: #ff6574;
 
 body {
-    font-family: $font-stack;
-    font-weight: $normal-weight;
+  color: $primary-color;
+  font-family: $font-stack;
+  font-weight: $normal-weight;
+  font-size: $normal-fsize;
 }
-
 @import 'sankey';
