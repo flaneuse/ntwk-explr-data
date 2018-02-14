@@ -57,12 +57,18 @@ dataout_dir = 'src/data/'
 
 
 # <<< query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing") >>>
-# main function to access the neo4j api to query network and return results
-# inputs:   query string (Cypher query arguments)
+# @name: query_neo4j
+# @title: function to access the neo4j api to query network and return results
+# @description: does not provide parsed results; merely provides enumerator to go through results (which will be in a nested json format)
+#               also doesn't actually execute the query untill needed; happens lazily, so until the BoltResult object is used, it's just sitting there.
+# @inputs:  query string (Cypher query arguments)
 #           url to local or AWS instance of network
 #           port: location of port to access data; must also be opened on AWS
 #           username/pw: access rights to the network
-# output:   neo4j result enumerator
+# @output:   neo4j result enumerator
+# @example: result = query_neo4j("MATCH (source { id: 'NCBIGene:55768', preflabel: 'NGLY1'}), (target { id: 'NCBIGene:358', preflabel: 'AQP1'}), path=(source)-[*..3]-(target) WITH source, target, path, [r IN relationships(path) | type(r)] AS types RETURN path")
+#           result.peek()
+
 def query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing"):
     # initialize neo4j
     # requires bolt connection to the URI
@@ -79,11 +85,11 @@ def query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j",
 
 # <<< get_paths(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing") >>>
 # main function to access the neo4j api to query network and return results
-# inputs:   query string (Cypher query arguments)
+# @inputs:   query string (Cypher query arguments)
 #           url to local or AWS instance of network
 #           port: location of port to access data; must also be opened on AWS
 #           username/pw: access rights to the network
-# output:   list containing flat dataframe of nodes and edges
+# @output:   list containing flat dataframe of nodes and edges
 def get_paths(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing"):
     # run query
     result = query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing")
