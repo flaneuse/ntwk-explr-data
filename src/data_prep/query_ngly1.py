@@ -1,6 +1,6 @@
 # @name:        query_ngly1.py
 # @title:       run (test) queries on NGLY1 knowledge graph
-# @description: create sample queries to use in development of D3-visualizations of graph networks 
+# @description: create sample queries to use in development of D3-visualizations of graph networks
 # @author:      Laura Hughes
 # @email:       lhughes@scripps.edu
 # @date:        13 February 2018
@@ -62,13 +62,15 @@ for key, query in queries.items():
 
 neo4j.save_paths(data, 'path-queries.json', direc = output_dir)
 
+
+
 # [3] Pull out metapaths for all the queries --------------------------------------------------------------
 metapaths = pd.DataFrame()
 
 for key, nodes in data.items():
-    metapath = neo4j.count_metapaths(nodes)
+    metapath = count_metapaths(nodes)
     metapath['query'] = key
-    metapaths = pd.concat([metapath, metapaths])
+    metapaths = pd.concat([metapath, metapaths], ignore_index=True)
 
 # export
-metapaths.reset_index().to_json(output_dir + 'test-metapaths.json')
+metapaths.to_json(output_dir + 'test-metapaths.json')

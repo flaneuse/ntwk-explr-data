@@ -221,9 +221,23 @@ def save_paths(data, filename, direc = dataout_dir):
 # takes a list of nodes and edges and returns a count of node types
 # NOTE: ignores any variation in the verb connecting the terms, e.g. an "is a" relationship versus a "part of" relationship
 def count_metapaths(data):
+    # NOTE: this is maybe faster using `zip`
+    def collapse_paths(x):
+        x['path_string'] = '-'.join(x.node_type)
+        x['example'] = '-'.join(x.node_name)
+        return x
+
+    def sample_path(path):
+        return(path.sample(1))
+
     # compress each list of nodes per path down to a metapath: a single string of node_types per path_num
     # group by path_num and paste/concatenate together the node_types, separated by a hyphen
-    paths = data['nodes'].groupby('path_num')['node_type'].apply(lambda x: '-'.join(x))
+    paths = data['nodes'].groupby('path_num').apply(collapse_paths)
     # group by the metapaths
     # reset index so there's an additional column containing the path numbers; needed to count the number of paths of each type.
-    return pd.DataFrame(paths).reset_index().groupby('node_type').agg('count')
+    meta = pd.DataFrame(paths).groupby('path_string').example.agg(['count', sample_path]).reset_index()
+
+    meta['path_type'] = meta.path_string.apply(lambda x: list(x.split(sep = '-')))
+    meta['sample_path'] = meta.sample_path.apply(lambda x: list(x.split(sep = '-')))
+
+    return meta.reset_index()
