@@ -256,7 +256,7 @@ def find_ancestors_1node(parent_df, id, reverse = True, return_paths = False):
 # @NOTE:    certain high level nodes have an NA id. These were filtered out upstream.
 #           As a result, any descendants of this node will have NA ancestors; assuming these ont terms aren't particularly impt.
 #           Return value for ancestors will be NA
-def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', ids = [], reverse = True, return_paths = False):
+def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', ids = [], reverse = True, return_paths = False, save_freq = 2500):
     # container for output
     output = pd.DataFrame()
 
@@ -287,6 +287,9 @@ def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', i
 
             if (idx[0] % 10 == 0):
                 bar.update(idx[0])
+
+            if (idx[0] % save_freq == 0):
+                output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors' + '_TEMPidx' + str(idx[0]) + '.tsv', sep='\t')
 
     if (save_terms):
         output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors.tsv', sep='\t')
