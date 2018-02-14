@@ -4,14 +4,7 @@
   <title>NGLY1 Sankey plot</title>
 
   <style>
-  .off {
-    fill: #CCC;
-  }
 
-  .highlight {
-    stroke: #ff6574;
-    opacity: 1;
-  }
   </style>
 
   <!-- Bootstrap -->
@@ -24,14 +17,15 @@
   <!-- <script src="/static/lib/bootstrap.min.js"></script> -->
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+  <link rel="stylesheet" href="css/style.min.css">
 </head>
 
 <body>
-<svg width="960" height="700"></svg>
-  <!-- <script src="/lib/d3v4+jetpack.js"></script> -->
-  <script src="/lib/lodash.min.js"></script>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+<svg width="960" height="300" id="metapaths"></svg>
+<svg width="960" height="700" id="sankey"></svg>
+  <script src="/lib/d3v4+jetpack.js"></script>
+  <!-- <script src="/lib/lodash.min.js"></script> -->
+  <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
   <script src="/lib/d3-scale-chromatic.min.js"></script>
   <script type="text/javascript" src="lib/d3-sankey.min.js"></script>
 
