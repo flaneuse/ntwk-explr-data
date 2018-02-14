@@ -68,8 +68,13 @@ def addit_pages(json_data):
 # <<< _term_gen(json_data) >>>
 # term generator to be able to loop through all terms in pulled data
 def _term_gen(data):
-    for term in data['_embedded']['terms']:
-        yield term
+    try:
+        data['_embedded']['terms']
+    except:
+        print('query failure')
+    else:
+        for term in data['_embedded']['terms']:
+            yield term
 
 # <<< pull_terms(json_data) >>>
 # function to remove only the good bits from an API call to OLS
@@ -173,7 +178,8 @@ def find_parents(terms, ont_id, save_terms = True, output_dir = ''):
                     time.sleep(120)
                     response = get_data(row.parent_url)
 
-                for parent_term in response['_embedded']['terms']:
+                iter_terms = _term_gen(response)
+                for parent_term in iter_terms:
                     nodes.append(idx)
                     anc.append(parent_term['obo_id'])
                     roots.append(parent_term['is_root'])
@@ -288,7 +294,7 @@ def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', i
             if (idx[0] % 10 == 0):
                 bar.update(idx[0])
 
-            if (idx[0] % save_freq == 0):
+            if ((idx[0] > 0) & (idx[0] % save_freq == 0)):
                 output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors' + '_TEMPidx' + str(idx[0]) + '.tsv', sep='\t')
 
     if (save_terms):
