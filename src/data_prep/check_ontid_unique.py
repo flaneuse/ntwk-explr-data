@@ -76,3 +76,25 @@ dupes.shape
 mp = ont_dicts[ont_dicts.ont_id == 'mp']
 
 sum(mp.duplicated(subset='id'))
+
+# [4] Find if there are weird ont terms in each of the ontologies -----------------------------------------
+# GOAL: lots of time potentially wasted calculating hierarchical levels for weird phenotype terms that aren't unique to that organism's db.
+# How much time would be saved if filtered those out when running queries?
+def pull_ontsource(id, sep = ':'):
+    split_id = id.split(sep)
+    if (len(split_id) > 1):
+        return split_id[0].lower()
+    else:
+        print("Cannot find the source for the id. Need to change `sep`?")
+
+ont_dicts['id_source'] = ont_dicts.id.apply(pull_ontsource)
+# Lots of extra node sources that probably aren't useful
+ont_dicts.groupby(['node_type', 'ont_id']).id_source.value_counts()
+
+import numpy as np
+ont_dicts['ont_id'] = ont_dicts['ont_id'].apply(lambda x: x.lower())
+ont_dicts['base_ont'] = np.where(ont_dicts.id_source == ont_dicts.ont_id, True, False)
+
+ont_dicts.groupby(['node_type', 'ont_id']).base_ont.value_counts()
+
+# Largest gains would be for MP and HP, if were to filter out calculating paths for those terms.
