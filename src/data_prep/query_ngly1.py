@@ -68,7 +68,7 @@ neo4j.save_paths(data, 'path-queries.json', direc = output_dir)
 metapaths = pd.DataFrame()
 
 for key, nodes in data.items():
-    metapath = count_metapaths(nodes)
+    metapath = neo4j.count_metapaths(nodes)
     metapath['query'] = key
     metapaths = pd.concat([metapath, metapaths], ignore_index=True)
 
