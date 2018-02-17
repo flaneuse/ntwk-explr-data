@@ -57,18 +57,17 @@ dataout_dir = 'src/data/'
 
 
 # <<< query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing") >>>
-# @name: query_neo4j
-# @title: function to access the neo4j api to query network and return results
+# @name:        query_neo4j
+# @summary:     function to access the neo4j api to query network and return results
 # @description: does not provide parsed results; merely provides enumerator to go through results (which will be in a nested json format)
 #               also doesn't actually execute the query untill needed; happens lazily, so until the BoltResult object is used, it's just sitting there.
-# @inputs:  query string (Cypher query arguments)
-#           url to local or AWS instance of network
-#           port: location of port to access data; must also be opened on AWS
-#           username/pw: access rights to the network
-# @output:   neo4j result enumerator
-# @example: result = query_neo4j("MATCH (source { id: 'NCBIGene:55768', preflabel: 'NGLY1'}), (target { id: 'NCBIGene:358', preflabel: 'AQP1'}), path=(source)-[*..3]-(target) WITH source, target, path, [r IN relationships(path) | type(r)] AS types RETURN path")
-#           result.peek()
-
+# @inputs:      *query* string (Cypher query arguments)
+#               *url* to local or AWS instance of network
+#               *port*: location of port to access data; must also be opened on AWS
+#               *username*/*pw*: access rights to the network
+# @output:      neo4j result enumerator
+# @example:     result = query_neo4j("MATCH (source { id: 'NCBIGene:55768', preflabel: 'NGLY1'}), (target { id: 'NCBIGene:358', preflabel: 'AQP1'}), path=(source)-[*..3]-(target) WITH source, target, path, [r IN relationships(path) | type(r)] AS types RETURN path")
+#               result.peek()
 def query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing"):
     # initialize neo4j
     # requires bolt connection to the URI
@@ -84,12 +83,14 @@ def query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j",
     return result
 
 # <<< get_paths(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing") >>>
-# main function to access the neo4j api to query network and return results
-# @inputs:   query string (Cypher query arguments)
-#           url to local or AWS instance of network
-#           port: location of port to access data; must also be opened on AWS
-#           username/pw: access rights to the network
-# @output:   list containing flat dataframe of nodes and edges
+# @name:        get_paths
+# @summary:     main function to access the neo4j api to query network and return results
+# @inputs:      *query*: string (Cypher query arguments)
+#               *url* to local or AWS instance of network
+#               *port*: location of port to access data; must also be opened on AWS
+#               *username*/*pw*: access rights to the network
+# @output:      list containing flat dataframe of nodes and edges
+# @examples:    get_paths("MATCH path=(source:GENE)-[:`RO:HOM0000020`]-(:GENE)--(ds:DISO)--(:GENE)-[:`RO:HOM0000020`]-(g1:GENE)--(pw:PHYS)--(target:GENE) WHERE source.id = 'NCBIGene:55768' AND target.id = 'NCBIGene:64772' AND ALL(x IN nodes(path) WHERE single(y IN nodes(path) WHERE y = x)) WITH g1, ds, pw, path, size( (source)-[:`RO:HOM0000020`]-() ) AS source_ortho, size( (g1)-[:`RO:HOM0000020`]-() ) AS other_ortho, max(size( (pw)-[]-() )) AS pwDegree, max(size( (ds)-[]-() )) AS dsDegree, [n IN nodes(path) WHERE n.preflabel IN ['cytoplasm','cytosol','nucleus','metabolism','membrane','protein binding','visible','viable','phenotype']] AS nodes_marked, [r IN relationships(path) WHERE r.property_label IN ['interacts with','in paralogy relationship with','in orthology relationship with','colocalizes with']] AS edges_marked WHERE size(nodes_marked) = 0 AND size(edges_marked) = 0 AND pwDegree < 51 AND dsDegree < 21 RETURN path")
 def get_paths(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing"):
     # run query
     result = query_neo4j(query, url = '52.87.232.110', port = '7688', username = "neo4j", pw = "sulabngly1testing")
@@ -159,6 +160,18 @@ def parseNode(result, verbose = True):
     nodes = pd.DataFrame(nodes).dropna(how='all')
     return nodes
 
+def add_paths(nodes, path_col = 'path_num'):
+    # NOTE: this would maybe be faster using `zip`
+    def collapse_paths(x):
+        x['path_types'] = '-'.join(x.node_type)
+        x['path_names'] = '-'.join(x.node_name)
+        return x
+
+    # compress each list of nodes per path down to a metapath: a single string of node_types per path_num
+    # group by path_num and paste/concatenate together the node_types, separated by a hyphen
+    paths = nodes.groupby(path_col).apply(collapse_paths)
+
+    return paths
 
 # <<< parsePath(path, path_num) >>>
 # Core function to parse neo4j results for an individual path
@@ -202,6 +215,7 @@ def parsePath(path, path_num):
         e_counter += 1
 
     nodes = pd.DataFrame(nodes)
+    nodes = add_paths(nodes)
     edges = pd.DataFrame(edges)
 
     return {'nodes': nodes, 'edges': edges}
@@ -217,27 +231,24 @@ def save_paths(data, filename, direc = dataout_dir):
         json.dump(data, outfile, cls = JSONEncoder)
 
 # <<< count_metapaths(data) >>>
-# compress down nodes into a count of metapaths
-# takes a list of nodes and edges and returns a count of node types
-# NOTE: ignores any variation in the verb connecting the terms, e.g. an "is a" relationship versus a "part of" relationship
+# @name:        count_metapaths
+# @summary:     compress down nodes into a count of metapaths
+# @description: takes a list of nodes and edges and returns a count of node types
+#               NOTE: ignores any variation in the verb connecting the terms, e.g. an "is a" relationship versus a "part of" relationship
+# @inputs:
+# @outputs:
+# @examples:
 def count_metapaths(data):
-    # NOTE: this is maybe faster using `zip`
-    def collapse_paths(x):
-        x['path_string'] = '-'.join(x.node_type)
-        x['example'] = '-'.join(x.node_name)
-        return x
 
     def sample_path(path):
         return(path.sample(1))
 
-    # compress each list of nodes per path down to a metapath: a single string of node_types per path_num
-    # group by path_num and paste/concatenate together the node_types, separated by a hyphen
-    paths = data['nodes'].groupby('path_num').apply(collapse_paths)
+    paths = add_paths(data['nodes'])
     # group by the metapaths
     # reset index so there's an additional column containing the path numbers; needed to count the number of paths of each type.
-    meta = pd.DataFrame(paths).groupby('path_string').example.agg(['count', sample_path]).reset_index()
-
-    meta['path_type'] = meta.path_string.apply(lambda x: list(x.split(sep = '-')))
+    meta = pd.DataFrame(paths).groupby('path_types').path_names.agg(['count', sample_path]).reset_index()
+# TODO: needs to be IDs, not just names?
+    meta['path_type'] = meta.path_types.apply(lambda x: list(x.split(sep = '-')))
     meta['sample_path'] = meta.sample_path.apply(lambda x: list(x.split(sep = '-')))
 
     return meta.reset_index()
