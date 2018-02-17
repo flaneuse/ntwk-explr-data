@@ -11,22 +11,24 @@
 
 
 # [0] Setup ----------------------------------------------------------------------
+import numpy as np
 import pandas as pd
 import requests
 import os
 import warnings
 
 # -- Atom notebook path settings --
-# output_dir = 'dataout/'  # path within Atom notebook
-# import src.data_prep.clean_neo4j as neo4j  # interface to query network
-# import src.data_prep.annot_GENE as gene # interface to get gene annotations
-# import src.data_prep.ont_struct as ont  # functions to pull ontology data
+output_dir = 'dataout/'  # path within Atom notebook
+import src.data_prep.clean_neo4j as neo4j  # interface to query network
+import src.data_prep.annot_GENE as gene # interface to get gene annotations
+import src.data_prep.ont_struct as ont  # functions to pull ontology data
 
 
 # -- commpand line prompt settings --
-output_dir = '../../dataout/' # path from command line prompt
-import clean_neo4j as neo4j # interface to query network
-import ont_struct as ont # functions to pull ontology data
+# output_dir = '../../dataout/' # path from command line prompt
+# import clean_neo4j as neo4j # interface to query network
+# import annot_GENE as gene # interface to get gene annotations
+# import ont_struct as ont # functions to pull ontology data
 
 
 # [1] Pull unique nodes from Nuria's graph -----------------------------------------------------------------
@@ -95,14 +97,13 @@ nodes = get_ontid(nodes)
 #               2) for each gene, pull associated gene ontology (GO) terms
 
 # [3] Create ontology hierarchical levels for *all* possible terms in base ontologies -----------------------------------------------------------------
-# [4] Merge together nodes in network, annotations, and ontology levels -----------------------------------------------------------------
-# -- Get ontology structures + hierarchy for all ontologies. --
+# Get ontology structures + hierarchy for all ontologies
 # OLS ids
 ont_ids = {
-    'DISO': ['FBcv', 'wbphenotype', 'FBbt', 'mp', 'hp'],
-    'GENE': ['go'],
     'ANAT': ['UBERON'],
-    'CHEM': ['CHEBI']
+    'CHEM': ['CHEBI'],
+    'DISO': ['FBcv', 'wbphenotype', 'FBbt', 'mp', 'hp'],
+    'GENE': ['go']
 }
 
 
@@ -121,13 +122,13 @@ def create_ont_dict(ont_ids, output_dir, merge=False):
             return False
 
     # create placeholder for term dictionaries
-    ont_dicts = {}
+    ont_terms = []
 
     # create placeholder for term parents
     parents = {}
 
     # create placeholder for term ancestors
-    ancestors = {}
+    ancestors = []
 
     for ont_type, ont_ids in ont_ids.items():
         print('\n\n---' + ont_type + '---')
@@ -139,113 +140,116 @@ def create_ont_dict(ont_ids, output_dir, merge=False):
             if(term_file):
                 # file already exists; read it in
                 print('reading in term file')
-                ont_dicts[ont_id] = pd.read_csv(
-                    output_dir + term_file, sep='\t', index_col='id')
+                ont_term = pd.read_csv(output_dir + term_file, sep = '\t')
             else:
                 # create file
                 print('creating term file')
-                ont_dicts[ont_id] = ont.get_terms(
-                    ont_id, save_terms=True, output_dir=output_dir)
+                ont_term = ont.get_terms(ont_id, save_terms=True, output_dir=output_dir)
+            # either way, append info for merging w/ nodes.
+            ont_term['ont_id'] = ont_id
+            ont_term['node_type'] = ont_type
+            ont_terms.append(ont_term)
 
             # -- parents --
             parent_file = check_exists(files, ont_id, 'parents')
             if(parent_file):
                 # file already exists; read it in
                 print('reading in parents file')
-                parents[ont_id] = pd.read_csv(
-                    output_dir + parent_file, sep='\t')
+                parents[ont_id] = pd.read_csv(output_dir + parent_file, sep='\t', index_col=0)
             else:
                 # create file
                 print('creating parents file')
-                parents[ont_id] = ont.find_parents(
-                    ont_dicts[ont_id], ont_id, save_terms=True, output_dir=output_dir)
+                parents[ont_id] = ont.find_parents(ont_terms[ont_id], ont_id, save_terms=True, output_dir=output_dir)
 
             # -- ancestors --
             hierarchy_file = check_exists(files, ont_id, 'ancestors')
             if(hierarchy_file):
                 # file already exists; read it in
                 print('reading in ancestor hierarchical structure file')
-                ancestors[ont_id] = pd.read_csv(
-                    output_dir + hierarchy_file, sep='\t')
+                ancestor = pd.read_csv(output_dir + hierarchy_file, sep='\t', index_col=0)
             else:
                 # create file
                 print('creating hierarchical structure file')
-                ancestors[ont_id] = ont.find_ancestors(
+                ancestor = ont.find_ancestors(
                     parents[ont_id], ont_id=ont_id, save_terms=True, output_dir=output_dir)
+            # either way, append info for merging w/ nodes.
+            ancestor['ont_id'] = ont_id
+            ancestor['node_type'] = ont_type
+            ancestors.append(ancestor)
+
+
+    ont_terms = pd.concat(ont_terms, ignore_index=True)
+    # append the roots before converting to DataFrame
+    roots = get_root_ancestors(ont_terms)
+    ancestors.append(roots)
+    ancestors = pd.concat(ancestors, ignore_index=True)
 
     if(merge):
-        # two stages: for genes, merge gene to annotations
-
-        # unnest names and
-
         # merge together ontology terms + hierarhical levels
-        merged = pd.merge(ont_dicts, ancestors, on="id",
-                          how="outer", indicator=True)
+        merged = pd.merge(ont_terms, ancestors, on=["node_type", "ont_id", "id"], how="outer", indicator=True)
         checked = check_merge(merged)
 
         if(checked):
-            warnings.Warning('Merge problems found')
+            warnings.warn('Merge problems found')
 
         merged.to_csv(
             output_dir + str(pd.Timestamp.today().strftime('%F')) + '_ont_dict.tsv', sep='\t')
         return merged
     else:
-        return {'parents': parents, 'ont_terms': ont_dicts, 'ont_hierarchy': ancestors}
+        return {'parents': parents, 'ont_terms': ont_terms, 'ont_hierarchy': ancestors}
 
+# TODO: incorporate this into the ancestor code
+def get_root_ancestors(ont_terms):
+    roots = ont_terms[ont_terms.is_root]
+    roots = roots[['node_type', 'ont_id','id']]
+    roots['node_level'] = 0
+    roots['ancestors'] = np.NaN
+    return roots
 
 def check_merge(merged):
-    no_ont = []
+    no_hierarchy = []
     no_base = []
 
-    print('{0}%\n successfully merged'.format(
-        sum(merged._merge == 'both') / len(merged)))
+    print('{0:.1f}%  successfully merged'.format(
+        (sum(merged._merge == 'both') / len(merged)) * 100))
 
     left_only = merged._merge == 'left_only'
     right_only = merged._merge == 'right_only'
 
     if(sum(left_only)):
         print(str(sum(left_only)) + ' lacking ontology hierarchy')
-        no_ont = merged[left_only]
+        no_hierarchy = merged[left_only]
 
     if(sum(right_only)):
         print(str(sum(right_only)) + ' lacking base terms')
-        no_base = merged[right_only]
-    if(left_only | right_only):
-        return {'no ontology terms': no_ont, 'no base terms': no_base}
+        no_base=merged[right_only]
+
+    if(sum(left_only) | sum(right_only)):
+        if(sum(left_only)):
+            print('\n*missing hierarchy terms*\n')
+            left_bytype = merged[left_only].groupby('node_type').ont_id.value_counts()
+            print(left_bytype)
+        if(sum(right_only)):
+            print('\n*missing base terms*\n')
+            right_bytype = merged[right_only].groupby('node_type').ont_id.value_counts()
+            print(right_bytype)
+        return {'no hierarhy terms': no_hierarchy, 'no base terms': no_base}
     else:
         return
 
 
-onts = create_ont_dict(ont_ids, output_dir)
+# call to create the dictionary
+onts = create_ont_dict(ont_ids, output_dir, merge=True)
 
-
-
-# -- Merge --
-#
-# # # genes
-# import src.data_prep.annot_GENE as gene
-#
-# genes = data['NFE2L1:ENGASE']['nodes']
-#
-# onts = pd.merge(genes, gene.gene_annot, left_on="node_id", right_on="id", how="left", indicator=True)
-# onts.head()
-# # check if any vars are unmerged.
-# onts._merge.value_counts()
-#
-#
-# left join to nodes
-onts = pd.merge(genes, gene.gene_annot, on="id", how="left", indicator=True)
 onts.head()
-# check if any vars are unmerged.
-onts._merge.value_counts()
+# [4] Merge together nodes in network, annotations, and ontology levels -----------------------------------------------------------------
+# -- Merge nodes + annotations --
+GO_terms = gene.go['annots']
+nodes.head()
+def merge_nodes_annots(nodes, GO_terms):
+GO_terms = GO_terms[['gene_name', 'id', ]]
 
-# find missing terms; spot-check if there's any patterns.
-missing = onts[onts._merge == 'left_only'][[
-    'id', 'node_name']].sort_values(['id'])
-print(missing)
+pd.merge(nodes, GO_terms, left_on=["node_type", "ont_id", "id"], how="outer", indicator=True)
 
-# Count frequency of GO terms
-onts.go_id.value_counts()
-
-# Count number of GO terms per ID.
-onts.groupby('id')['go_id'].count().describe()
+merge_nodes_annots(nodes, gene.go['annots']
+GO_terms.head()
