@@ -29,4 +29,8 @@ nodes = paths['nodes']
 edges = paths['edges']
 
 # [2: Test some aggregations] ---------------------------------------------------------------------------
-edges.head()
+nodes.head()
+
+nodes.groupby('node_type').node_name.value_counts()
+
+# [3: merge together datasets] --------------------------------------------------------------------------
