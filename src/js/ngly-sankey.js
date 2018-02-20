@@ -1,4 +1,8 @@
-var svg = d3.select("svg"),
+var svg = d3.select("svg#sankey"),
+  width = +svg.attr("width"),
+  height = +svg.attr("height");
+
+var metasvg = d3.select("svg#metapaths"),
   width = +svg.attr("width"),
   height = +svg.attr("height");
 
@@ -33,6 +37,82 @@ var node = svg.append("g")
   .attr("font-size", 10)
   .selectAll("g");
 
+d3.json("/data/test-metapaths.json", function(error, metapaths){
+    console.log((metapaths))
+    var metapaths = {
+'index':	0,
+'path_string':	'DISO-DISO-DISO-PHYS',
+'count':	1640,
+'sample_path':	['Alacrima',
+ 'Familial dysautonomia',
+ 'Elevated serum creatinine',
+ 'Post translational protein modification'],
+'path_type':	['DISO', 'DISO', 'DISO', 'PHYS']
+}
+  // metapaths = metapaths.filter(function(d) { return d.query == 'alacrima:pathway_3'})
+  // console.log(metapaths.query)
+
+  // var metapaths = metapaths.count
+    console.log((metapaths))
+  var x_pos = 150
+  var x_width = x_pos*0.65
+  var y_pos = 25
+
+  metasvg
+  .selectAll('.example')
+  .data(metapaths.sample_path)
+  .enter().append('text.example')
+  .attr('x', function(d, i) { return i * x_pos})
+  .attr('y', 100)
+  .text(function(d) { return d})
+
+  metasvg
+  .selectAll('rect')
+  .data(metapaths.path_type)
+  .enter().append('rect.node-type')
+  .attr('x', function(d, i) { return i * x_pos})
+  .attr('width', x_width)
+  .attr('y', 0)
+  .attr('height', 50)
+
+  metasvg
+  .selectAll('text.node-type')
+  .data(metapaths.path_type)
+  .enter().append('text.node-type')
+  .attr('x', function(d, i) { return i * x_pos + x_width/2})
+  .attr('y', y_pos)
+  .text(function(d) { return d})
+
+  metasvg
+  .selectAll('line.node-type')
+  .data(metapaths.path_type)
+  .enter().append('line.node-type')
+  .attr('x1', function(d, i) { return i * x_pos + x_width })
+  .attr('x2', function(d, i) { return (i + 1) * x_pos })
+  .attr('y1', y_pos)
+  .attr('y2', y_pos)
+  .attr("marker-end", "url(#triangle)");
+
+  metasvg
+  .selectAll('line.example')
+  .data(metapaths.sample_path)
+  .enter().append('line.example')
+  .attr('x1', function(d, i) { return i * x_pos + x_width })
+  .attr('x2', function(d, i) { return (i + 1) * x_pos })
+  .attr('y1', 100)
+  .attr('y2', 100)
+  .attr("marker-end", "url(#triangle)");
+
+  metasvg.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", 12)
+      .attr("refY", 6)
+      .attr("markerWidth", 30)
+      .attr("markerHeight", 30)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 12 6 0 12 3 6");
+})
 
 d3.json("/data/sm.json", function(error, paths) {
   d3.json("/data/test.json", function(error, test) {
