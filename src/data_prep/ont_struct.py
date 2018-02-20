@@ -264,7 +264,7 @@ def find_ancestors_1node(parent_df, id, reverse = True, return_paths = False):
 # @NOTE:    certain high level nodes have an NA id. These were filtered out upstream.
 #           As a result, any descendants of this node will have NA ancestors; assuming these ont terms aren't particularly impt.
 #           Return value for ancestors will be NA
-def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', ids = [], reverse = True, return_paths = False, save_freq = 2500):
+def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', ids = [], reverse = True, return_paths = False, save_freq = 1000, start_idx = None):
     # container for output
     output = pd.DataFrame()
 
@@ -273,6 +273,9 @@ def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', i
     # However, including them the entire time will add unnecessary calculations of the same paths.
     if(len(ids) == 0):
         ids = pd.unique(parent_df.id)
+
+        if(start_idx is not None):
+            ids = ids[start_idx+1:]
     elif(isinstance(ids, pd.Series)):
         # convert series to Numpy ndarray
         ids = ids.as_matrix()
@@ -300,7 +303,10 @@ def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', i
                 output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors' + '_TEMPidx' + str(idx[0]) + '.tsv', sep='\t')
 
     if (save_terms):
-        output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors.tsv', sep='\t')
+        if(start_idx is not None):
+            output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors.tsv', sep='\t')
+        else:
+            output.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors_idx' + str(start_idx) + '.tsv', sep='\t')
 
     return output
 
@@ -310,6 +316,7 @@ def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', i
 # fbcv = pd.read_csv('dataout/2018-02-09_FBcv_terms.tsv', sep = '\t')
 # # parent_df = find_parents(fbcv, 'fbcv', save_terms = False) # call to API; requires 20-30 min.
 # parent_df = pd.read_csv('dataout/2018-02-12_FBcv_parents.tsv', sep = '\t')
+
 #
 #
 # # Initial tests; used in the development of the scripts
@@ -326,7 +333,6 @@ def find_ancestors(parent_df, ont_id = '', save_terms = True, output_dir = '', i
 # # Random sampling testing; checked by eye to make sure okay.
 # ids = parent_df.id.sample(5)
 # find_ancestors(parent_df, ids = ids, return_paths = True, save_terms = False)
-
 
 
 # testers when the return object was a long data frame.

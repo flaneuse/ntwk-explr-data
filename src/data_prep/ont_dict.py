@@ -18,17 +18,17 @@ import os
 import warnings
 
 # -- Atom notebook path settings --
-output_dir = 'dataout/'  # path within Atom notebook
-import src.data_prep.clean_neo4j as neo4j  # interface to query network
-import src.data_prep.annot_GENE as gene # interface to get gene annotations
-import src.data_prep.ont_struct as ont  # functions to pull ontology data
+# output_dir = 'dataout/'  # path within Atom notebook
+# import src.data_prep.clean_neo4j as neo4j  # interface to query network
+# import src.data_prep.annot_GENE as gene # interface to get gene annotations
+# import src.data_prep.ont_struct as ont  # functions to pull ontology data
 
 
 # -- commpand line prompt settings --
-# output_dir = '../../dataout/' # path from command line prompt
-# import clean_neo4j as neo4j # interface to query network
+output_dir = '../../dataout/' # path from command line prompt
+import clean_neo4j as neo4j # interface to query network
 # import annot_GENE as gene # interface to get gene annotations
-# import ont_struct as ont # functions to pull ontology data
+import ont_struct as ont # functions to pull ontology data
 
 
 # [1] Pull unique nodes from Nuria's graph -----------------------------------------------------------------
@@ -164,9 +164,21 @@ def create_ont_dict(ont_ids, output_dir, merge=False):
             # -- ancestors --
             hierarchy_file = check_exists(files, ont_id, 'ancestors')
             if(hierarchy_file):
-                # file already exists; read it in
-                print('reading in ancestor hierarchical structure file')
-                ancestor = pd.read_csv(output_dir + hierarchy_file, sep='\t', index_col=0)
+                if (hierarchy_file.find('TEMP') > -1):
+                    start_idx = int(hierarchy_file.split('TEMPidx')[1].replace('.tsv', ''))
+                    # file already exists but is incomplete; read it in
+                    print('reading in partial ancestor hierarchical structure file')
+                    ancestor_partial = pd.read_csv(output_dir + hierarchy_file, sep='\t', index_col=0)
+                    print('creating the rest of the ancestor hierarchical structures, starting at index ' + str(start_idx))
+                    ancestor = ont.find_ancestors(
+                        parents[ont_id], ont_id=ont_id, save_terms=True, output_dir=output_dir, start_idx = start_idx)
+                    # combine the two halves
+                    ancestor = pd.concat([ancestor, ancestor_partial], ignore_index=True)
+                    ancestor.to_csv(output_dir + str(pd.Timestamp.today().strftime('%F')) + '_' + ont_id + '_ancestors_all.tsv', sep='\t')
+                else:
+                    # file already exists; read it in
+                    print('reading in ancestor hierarchical structure file')
+                    ancestor = pd.read_csv(output_dir + hierarchy_file, sep='\t', index_col=0)
             else:
                 # create file
                 print('creating hierarchical structure file')
@@ -176,6 +188,7 @@ def create_ont_dict(ont_ids, output_dir, merge=False):
             ancestor['ont_id'] = ont_id
             ancestor['node_type'] = ont_type
             ancestors.append(ancestor)
+
 
 
     ont_terms = pd.concat(ont_terms, ignore_index=True)
@@ -244,12 +257,12 @@ onts = create_ont_dict(ont_ids, output_dir, merge=True)
 onts.head()
 # [4] Merge together nodes in network, annotations, and ontology levels -----------------------------------------------------------------
 # -- Merge nodes + annotations --
-GO_terms = gene.go['annots']
-nodes.head()
-def merge_nodes_annots(nodes, GO_terms):
-GO_terms = GO_terms[['gene_name', 'id', ]]
-
-pd.merge(nodes, GO_terms, left_on=["node_type", "ont_id", "id"], how="outer", indicator=True)
-
-merge_nodes_annots(nodes, gene.go['annots']
-GO_terms.head()
+# GO_terms = gene.go['annots']
+# nodes.head()
+# def merge_nodes_annots(nodes, GO_terms):
+# GO_terms = GO_terms[['gene_name', 'id', ]]
+#
+# pd.merge(nodes, GO_terms, left_on=["node_type", "ont_id", "id"], how="outer", indicator=True)
+#
+# merge_nodes_annots(nodes, gene.go['annots']
+# GO_terms.head()
