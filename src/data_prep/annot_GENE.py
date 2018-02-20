@@ -10,7 +10,8 @@ import pandas as pd
 import warnings
 import requests
 import progressbar
-import src.data_prep.clean_neo4j as neo4j
+# import src.data_prep.clean_neo4j as neo4j
+import clean_neo4j as neo4j
 
 output_dir = 'dataout/'
 
