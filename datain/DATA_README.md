@@ -18,6 +18,11 @@ To categorize these nodes into broader categories, they need to be merged in wit
 5. Check for unmerged node ids.
 6. For every node, collect parents (and associated levels within ontology hierarchy).
 
+* Annotation sources
+HPO: http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/
+MP: http://www.informatics.jax.org/downloads/reports/index.html#pheno
+
+
 # Ontology sources
 | node type | ontology source | download file | permalink downloaded file | description | download date | common id |
 | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
